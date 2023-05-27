@@ -1,27 +1,8 @@
-const strs = process.argv.slice(2);
-const strsLength = strs.length;
-
-if (strsLength === 0) {
-  console.log("");
-} else if (strsLength === 1) {
-  console.log(strs[0]);
-} else {
-  let lcs = "";
-  const shortestStr = strs.reduce((a, b) => (a.length < b.length ? a : b));
-  for (let i = 0; i < shortestStr.length; i++) {
-    for (let j = i + 1; j <= shortestStr.length; j++) {
-      const substr = shortestStr.slice(i, j);
-      let isCommon = true;
-      for (let k = 0; k < strsLength; k++) {
-        if (!strs[k].includes(substr)) {
-          isCommon = false;
-          break;
-        }
-      }
-      if (isCommon && substr.length > lcs.length) {
-        lcs = substr;
-      }
-    }
-  }
-  console.log(lcs);
+const FCS = (strs) => {
+  if (!strs.length) return "";
+  if (strs.length === 1) return strs[0];
+  let l = "",s = strs[0],len = s.length;
+  for (let i = 0; i < len; i++) for (let j = i + 1; j <= len; j++) if (strs.every((x) => ~x.indexOf(s.slice(i, j))) && j - i > l.length) l = s.slice(i, j);
+  return l;
 }
+console.log(FCS(process.argv.slice(2)));
