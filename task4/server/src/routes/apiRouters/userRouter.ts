@@ -9,7 +9,7 @@ userRouter.post(
   body("password").isLength({ min: 1, max: 32 }),
   userController.registration
 );
-// userRouter.post("/login", userController.login);
+userRouter.post("/login", userController.login);
 // userRouter.post("/logout", userController.logout);
 // userRouter.get("/");
 
