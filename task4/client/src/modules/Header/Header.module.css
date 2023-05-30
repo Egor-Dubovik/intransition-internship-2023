@@ -1,0 +1,8 @@
+.Container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Logo {
+  margin-right: 30px;
+}

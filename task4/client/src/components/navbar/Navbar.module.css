@@ -1,0 +1,18 @@
+.Navbar {
+}
+
+.NavbarList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.Link {
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.ActiveLink {
+  color: rgb(92, 116, 250);
+  transition: all 0.3s ease;
+}
