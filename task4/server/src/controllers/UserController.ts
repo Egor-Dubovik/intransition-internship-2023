@@ -31,10 +31,10 @@ class UserController {
     }
   }
 
-  async logout(req: Request, res: Response, next: NextFunction) {
+  async getAllUsers(req: Request, res: Response, next: NextFunction) {
     try {
-      // const data = await userService.logout();
-      // return res.json(data);
+      const users = await userService.getAllUsers();
+      return res.json(users);
     } catch (err) {
       next(err);
     }

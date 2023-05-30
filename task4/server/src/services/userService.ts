@@ -22,6 +22,11 @@ class UserService {
     if (!isPassEquals) throw ApiError.badRequest("Incorrect password");
     return user;
   }
+
+  async getAllUsers() {
+    const users = await User.findAll();
+    return users;
+  }
 }
 
 export default new UserService();
