@@ -1,14 +1,21 @@
 import { Request, Response, NextFunction } from "express";
 import { validationResult } from "express-validator";
+import ApiError from "../exceptions/ApiError";
+import userService from "../services/userService";
+import { IUser } from "../common/types/user";
 
 class UserController {
   async registration(req: Request, res: Response, next: NextFunction) {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return next;
+        return next(
+          ApiError.badRequest("Validation error check email and password", errors.array())
+        );
       }
-      return res.json("userData");
+      const registrData = req.body as IUser;
+      const userData = await userService.registration(registrData);
+      return res.json(userData);
     } catch (err) {
       next(err);
     }
@@ -17,12 +24,8 @@ class UserController {
   async login(req: Request, res: Response, next: NextFunction) {
     try {
       const { email, password } = req.body;
-      const userData = await userService.login(email, password);
-      res.cookie("refreshToken", userData.refreshToken, {
-        maxAge: 30 * 24 * 3600 * 1000,
-        httpOnly: true,
-      });
-      return res.json(userData);
+      // const userData = await userService.login(email, password);
+      // return res.json(userData);
     } catch (err) {
       next(err);
     }
@@ -30,10 +33,8 @@ class UserController {
 
   async logout(req: Request, res: Response, next: NextFunction) {
     try {
-      const { refreshToken } = req.cookies;
-      const token = await userService.logout(refreshToken);
-      res.clearCookie("refreshToken");
-      return res.json(token);
+      // const data = await userService.logout();
+      // return res.json(data);
     } catch (err) {
       next(err);
     }
