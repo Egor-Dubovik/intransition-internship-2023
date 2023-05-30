@@ -3,15 +3,14 @@ import { validationResult } from "express-validator";
 import ApiError from "../exceptions/ApiError";
 import userService from "../services/userService";
 import { IUser } from "../common/types/user";
+import { messages } from "../common/constant/messages";
 
 class UserController {
   async registration(req: Request, res: Response, next: NextFunction) {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return next(
-          ApiError.badRequest("Validation error check email and password", errors.array())
-        );
+        return next(ApiError.badRequest(messages.validationError, errors.array()));
       }
       const registrData = req.body as IUser;
       const userData = await userService.registration(registrData);
