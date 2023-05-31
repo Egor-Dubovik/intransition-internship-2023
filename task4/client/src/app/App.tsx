@@ -1,6 +1,7 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { RouterProvider } from 'react-router-dom';
+import { UserProvider } from '../context/UserContext';
 import router from '../router/router';
 import './App.css';
 
@@ -16,7 +17,9 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="App">
-        <RouterProvider router={router} />
+        <UserProvider>
+          <RouterProvider router={router} />
+        </UserProvider>
       </div>
     </QueryClientProvider>
   );
