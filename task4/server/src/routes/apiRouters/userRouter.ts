@@ -11,5 +11,6 @@ userRouter.post(
 );
 userRouter.post("/login", userController.login);
 userRouter.get("/", userController.getAllUsers);
+userRouter.delete("/", userController.delete);
 
 export default userRouter;

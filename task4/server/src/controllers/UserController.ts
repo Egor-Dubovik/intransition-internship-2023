@@ -38,6 +38,16 @@ class UserController {
       next(err);
     }
   }
+
+  async delete(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.body;
+      const user = await userService.delete(id);
+      return res.json(user);
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 export default new UserController();

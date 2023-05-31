@@ -17,7 +17,7 @@ class UserService {
 
   async login(email: string, password: string): Promise<Model<IUser>> {
     const user = await User.findOne({ where: { email } });
-    if (!user) throw ApiError.badRequest(messages.userNotFound);
+    if (!user) throw ApiError.badRequest(messages.userByEmailNotFound);
     const storedPassword = user.get("password") as string;
     const isPassEquals = await bcrypt.compare(password, storedPassword);
     if (!isPassEquals) throw ApiError.badRequest(messages.incorrectPassword);
@@ -27,6 +27,13 @@ class UserService {
   async getAllUsers() {
     const users = await User.findAll();
     return users;
+  }
+
+  async delete(id: number) {
+    const candidate = await User.findOne({ where: { id } });
+    if (!candidate) throw ApiError.badRequest(messages.userByIdNotFound);
+    const user = await User.destroy({ where: { id } });
+    return user;
   }
 }
 
