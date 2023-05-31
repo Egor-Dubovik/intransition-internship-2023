@@ -1,26 +1,28 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { NavLink } from 'react-router-dom';
-import { ROUTES } from '../../routes/routes.enum';
-import classes from './Navbar.module.css';
+import { ROUTES } from '../../router/routes.enum';
+import './Navbar.css';
 
-const Navbar = () => {
+interface NavLinkClassProps {
+  isActive: boolean;
+}
+
+const Navbar: FC = () => {
+  const getNavLinkClass = ({ isActive }: NavLinkClassProps) => {
+    return isActive ? 'nav-list__link_active' : 'nav-list__link';
+  };
+
   return (
-    <nav className={classes.Navbar}>
-      <ul className={classes.NavbarList}>
-        <li>
-          <NavLink
-            className={({ isActive }) => (isActive ? classes.ActiveLink : classes.Link)}
-            to={ROUTES.MAIN}
-          >
+    <nav className="navbar">
+      <ul className="navbar__list nav-list">
+        <li className="nav-list__item">
+          <NavLink className={getNavLinkClass} to={ROUTES.MAIN}>
             main
           </NavLink>
         </li>
-        <li>
-          <NavLink
-            className={({ isActive }) => (isActive ? classes.ActiveLink : classes.Link)}
-            to={ROUTES.PROFILE}
-          >
-            profile
+        <li className="nav-list__item">
+          <NavLink className={getNavLinkClass} to={ROUTES.LOGIN}>
+            auth
           </NavLink>
         </li>
       </ul>

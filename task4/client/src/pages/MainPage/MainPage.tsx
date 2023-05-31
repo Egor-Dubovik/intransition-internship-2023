@@ -1,13 +1,11 @@
-import React from 'react';
+import React, { FC } from 'react';
+import { Container } from 'react-bootstrap';
 
-const MainPage: React.FC = () => {
-  const [data, setData] = React.useState('');
-
+const MainPage: FC = () => {
   return (
-    <>
-      <input type="text" onChange={(event) => setData(event.target.value)} />
-      <p>Data: {data}</p>
-    </>
+    <main className="main-page">
+      <Container>MainPage</Container>
+    </main>
   );
 };
 

@@ -1,18 +1,16 @@
-.Navbar {
-}
-
-.NavbarList {
+.navbar__list.nav-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  column-gap: 20px;
+  row-gap: 8px;
 }
 
-.Link {
+.nav-list__link {
   color: #fff;
   transition: all 0.3s ease;
 }
 
-.ActiveLink {
+.nav-list__link_active {
   color: rgb(92, 116, 250);
   transition: all 0.3s ease;
 }

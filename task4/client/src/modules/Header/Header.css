@@ -1,8 +1,12 @@
-.Container {
+.header {
+  padding: 15px 0;
+}
+
+.header__container {
   display: flex;
   justify-content: space-between;
 }
 
-.Logo {
+.header__logo {
   margin-right: 30px;
 }

@@ -1,14 +1,16 @@
-import React, { FC } from 'react';
-import Navbar from '../../components/navbar/Navbar';
-import classes from './Header.module.css';
+import React from 'react';
+import { Container } from 'react-bootstrap';
+import Logo from '../../components/logos/Logo/Logo';
+import Navbar from '../../components/Navbar/Navbar';
+import './Header.css';
 
-const Header: FC = () => {
+const Header = (): JSX.Element => {
   return (
-    <div className={'header'}>
-      <div className={classes.Container}>
-        <div className={classes.Logo}>logo</div>
+    <div className="header">
+      <Container className="header__container">
+        <Logo className="header__logo" />
         <Navbar />
-      </div>
+      </Container>
     </div>
   );
 };

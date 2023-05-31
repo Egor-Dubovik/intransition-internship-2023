@@ -7,9 +7,7 @@ const Root = (): JSX.Element => {
   return (
     <>
       <Header />
-      <main id="main">
-        <Outlet />
-      </main>
+      <Outlet />
       <Footer />
     </>
   );
