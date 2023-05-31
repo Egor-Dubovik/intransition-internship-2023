@@ -48,7 +48,7 @@ const AppNavbar: FC = () => {
               main
             </NavLink>
             <NavLink className={getNavLinkClass} onClick={closeMenu} to={ROUTES.LOGIN}>
-              auth
+              login
             </NavLink>
           </Nav>
         </Offcanvas.Body>

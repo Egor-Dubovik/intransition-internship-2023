@@ -5,16 +5,16 @@ const RegistrationForm = () => {
   return (
     <Form>
       <Form.Floating className="mb-3">
-        <Form.Control id="floatingInputCustom" type="text" placeholder="name@example.com" />
-        <label htmlFor="floatingInputCustom">name</label>
+        <Form.Control id="name" type="text" placeholder="name@example.com" />
+        <label htmlFor="name">name</label>
       </Form.Floating>
       <Form.Floating className="mb-3">
-        <Form.Control id="floatingInputCustom" type="email" placeholder="name@example.com" />
-        <label htmlFor="floatingInputCustom">email</label>
+        <Form.Control id="email" type="email" placeholder="name@example.com" />
+        <label htmlFor="email">email</label>
       </Form.Floating>
       <Form.Floating className="mb-3">
-        <Form.Control id="floatingInputCustom" type="password" placeholder="name@example.com" />
-        <label htmlFor="floatingInputCustom">password</label>
+        <Form.Control id="password" type="password" placeholder="name@example.com" />
+        <label htmlFor="password">password</label>
       </Form.Floating>
     </Form>
   );
