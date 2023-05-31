@@ -1,16 +1,15 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
-import { NavLink, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+import ActionFormGroup from '../../components/ActionFormGroup/ActionFormGroup';
+import './AuthPage.css';
 
-const AuthPage = () => {
+const AuthPage = (): JSX.Element => {
   return (
     <main className="auth-page">
       <Container>
-        <div className="background"></div>
         <Outlet />
-        <div className="register-link">
-          Don&apost have an account? <NavLink to="/register">Register</NavLink>
-        </div>
+        <ActionFormGroup />
       </Container>
     </main>
   );
