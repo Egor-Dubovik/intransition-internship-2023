@@ -1,8 +1,9 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+
 import { IRegistrationParams } from '../../../common/types/user';
+import useRedirect from '../../../hooks/useRedirect';
 import useRegistration from '../../../hooks/useRegistration';
 import { ROUTES } from '../../../router/routes.enum';
 import ActionFormGroup from '../../auth/ActionFormGroup/ActionFormGroup';
@@ -16,15 +17,11 @@ const RegistrationForm: FC = () => {
     formState: { errors },
   } = useForm<IRegistrationParams>();
   const { registration, isLoading, isSuccess, err } = useRegistration();
-  const navigate = useNavigate();
 
+  useRedirect(isSuccess, ROUTES.MAIN);
   const onSubmit = (userData: IRegistrationParams) => {
     registration(userData);
   };
-
-  useEffect(() => {
-    if (isSuccess) navigate(ROUTES.MAIN);
-  }, [isSuccess, navigate]);
 
   return (
     <>

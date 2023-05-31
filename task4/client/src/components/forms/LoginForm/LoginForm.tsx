@@ -1,30 +1,26 @@
-import React, { useEffect } from 'react';
+import React, { FC } from 'react';
 import { Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import { ILoginParams } from '../../../common/types/user';
 import useLogin from '../../../hooks/useLogin';
+import useRedirect from '../../../hooks/useRedirect';
 import { ROUTES } from '../../../router/routes.enum';
 import ActionFormGroup from '../../auth/ActionFormGroup/ActionFormGroup';
 import ErrorMessage from '../../ErrorMessage/ErrorMessage';
 import Loader from '../../Loader/Loader';
 
-const LoginForm = (): JSX.Element => {
+const LoginForm: FC = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<ILoginParams>();
   const { login, isLoading, isSuccess, err } = useLogin();
-  const navigate = useNavigate();
 
+  useRedirect(isSuccess, ROUTES.MAIN);
   const onSubmit = (userData: ILoginParams) => {
     login(userData);
   };
-
-  useEffect(() => {
-    if (isSuccess) navigate(ROUTES.MAIN);
-  }, [isSuccess, navigate]);
 
   return (
     <>
