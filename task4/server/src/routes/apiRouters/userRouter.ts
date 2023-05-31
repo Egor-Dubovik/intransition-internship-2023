@@ -10,6 +10,7 @@ userRouter.post(
   userController.registration
 );
 userRouter.post("/login", userController.login);
+userRouter.put("/", userController.updateStatus);
 userRouter.get("/", userController.getAllUsers);
 userRouter.delete("/", userController.delete);
 

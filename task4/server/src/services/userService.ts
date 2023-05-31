@@ -1,6 +1,6 @@
 import { Model } from "sequelize";
 import bcrypt from "bcrypt";
-import { IUser } from "../common/types/user";
+import { IUser, StatusType } from "../common/types/user";
 import ApiError from "../exceptions/ApiError";
 import User from "../models/userModel";
 import { messages } from "../common/constant/messages";
@@ -24,12 +24,18 @@ class UserService {
     return user;
   }
 
-  async getAllUsers() {
+  async getAllUsers(): Promise<Model<IUser>[]> {
     const users = await User.findAll();
     return users;
   }
 
-  async delete(id: number) {
+  async updateStatus(id: number, status: StatusType): Promise<number> {
+    if (!id || !status) throw ApiError.badRequest(messages.invalidProps);
+    const user = await User.update({ status: status }, { where: { id: id } });
+    return user[0];
+  }
+
+  async delete(id: number): Promise<number> {
     const candidate = await User.findOne({ where: { id } });
     if (!candidate) throw ApiError.badRequest(messages.userByIdNotFound);
     const user = await User.destroy({ where: { id } });

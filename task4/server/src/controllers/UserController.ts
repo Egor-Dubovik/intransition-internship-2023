@@ -39,10 +39,19 @@ class UserController {
     }
   }
 
+  async updateStatus(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id, status } = req.body;
+      const user = await userService.updateStatus(id, status);
+      return res.json(user);
+    } catch (err) {
+      next(err);
+    }
+  }
+
   async delete(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id } = req.body;
-      const user = await userService.delete(id);
+      const user = await userService.delete(req.body.id);
       return res.json(user);
     } catch (err) {
       next(err);
