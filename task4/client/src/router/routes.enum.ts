@@ -1,6 +1,6 @@
 export enum ROUTES {
-  ROOT = '/',
-  MAIN = '',
+  ROOT = '',
+  MAIN = '/',
   AUTH = '/auth',
   LOGIN = '/auth/login',
   REGISTRATION = '/auth/registration',
