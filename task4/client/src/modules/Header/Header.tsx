@@ -1,17 +1,17 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
 import Logo from '../../components/logos/Logo/Logo';
-import Navbar from '../../components/Navbar/Navbar';
+import AppNavbar from '../../components/AppNavbar/AppNavbar';
+import Container from 'react-bootstrap/Container';
 import './Header.css';
 
 const Header = (): JSX.Element => {
   return (
-    <div className="header">
+    <header className="header">
       <Container className="header__container">
-        <Logo className="header__logo" />
-        <Navbar />
+        <Logo className="header__logo " />
+        <AppNavbar />
       </Container>
-    </div>
+    </header>
   );
 };
 
