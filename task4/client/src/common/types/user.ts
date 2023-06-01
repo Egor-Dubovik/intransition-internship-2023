@@ -21,3 +21,8 @@ export interface IUpdateStatusParams {
   id: number;
   status: StatusType;
 }
+
+export interface IDeleteResponse {
+  isDeleted: boolean;
+  id?: number;
+}
