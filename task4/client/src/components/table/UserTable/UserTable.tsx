@@ -1,39 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import Table from 'react-bootstrap/Table';
 import { IUser } from '../../../common/types/user';
-import { useGetAllUsers } from '../../../hooks/user/useUser';
-import ErrorMessage from '../../ErrorMessage/ErrorMessage';
-import Loader from '../../Loader/Loader';
 import TableBody from '../TableBody/TableBody';
 import TableHeader from '../TableHeader/TableHeader';
 
-const UserTable = () => {
-  const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
-  const { allUsers, isLoading, err } = useGetAllUsers();
+interface IUserTableProps {
+  allUsers: IUser[];
+  selectedUsers: number[];
+  toggleSelectUser: (id: number) => void;
+  toggleSelectAll: () => void;
+}
 
-  const toggleSelectAll = () => {
-    if (selectedUsers.length === (allUsers as IUser[]).length) {
-      setSelectedUsers([]);
-      return;
-    }
-    const userIDs = allUsers?.map((user) => user.id);
-    setSelectedUsers(userIDs as number[]);
-  };
-
-  const toggleSelectUser = (userID: number) => {
-    if (selectedUsers.includes(userID)) {
-      setSelectedUsers(selectedUsers.filter((id) => id !== userID));
-      return;
-    }
-    setSelectedUsers([...selectedUsers, userID]);
-  };
-
-  if (isLoading) return <Loader />;
-
+const UserTable: FC<IUserTableProps> = ({
+  allUsers,
+  selectedUsers,
+  toggleSelectAll,
+  toggleSelectUser,
+}) => {
   return (
     <>
-      {err && <ErrorMessage message={err.response.data.message || err.message} />}
-      {allUsers && (
+      {allUsers ? (
         <Table bordered hover responsive variant="dark">
           <TableHeader onSelectAll={toggleSelectAll} />
           <TableBody
@@ -42,6 +28,8 @@ const UserTable = () => {
             toggleSelect={toggleSelectUser}
           />
         </Table>
+      ) : (
+        <div>no users found</div>
       )}
     </>
   );
