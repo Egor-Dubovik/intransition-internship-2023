@@ -24,6 +24,11 @@ const UserService = {
     return response.data;
   },
 
+  async getUser(id: number): Promise<IUser | null> {
+    const response = await $api.get<IUser | null>(`${API.user}/${id}`);
+    return response.data;
+  },
+
   async updateStatus(data: IUpdateStatusParams): Promise<IUser | null> {
     const response = await $api.put<IUser | null>(API.user, data);
     return response.data;
