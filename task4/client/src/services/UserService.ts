@@ -1,6 +1,11 @@
-import { ILoginParams, IRegistrationParams, IUser } from '../common/types/user';
 import { API } from '../common/constant/api';
 import $api from '.';
+import {
+  ILoginParams,
+  IRegistrationParams,
+  IUpdateStatusParams,
+  IUser,
+} from '../common/types/user';
 
 const UserService = {
   async registration(data: IRegistrationParams): Promise<IUser> {
@@ -15,6 +20,11 @@ const UserService = {
 
   async getAllUsers(): Promise<IUser[]> {
     const response = await $api.get<IUser[]>(API.user);
+    return response.data;
+  },
+
+  async updateStatus(data: IUpdateStatusParams): Promise<IUser> {
+    const response = await $api.put<IUser>(API.user, data);
     return response.data;
   },
 };

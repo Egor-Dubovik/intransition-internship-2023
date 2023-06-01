@@ -1,0 +1,13 @@
+.toolbar {
+  margin-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.toolbar__tools {
+  display: flex;
+  gap: 15px;
+}

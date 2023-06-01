@@ -1,4 +1,5 @@
 .table__field_select-all {
   text-align: center;
+  user-select: none;
   cursor: pointer;
 }
