@@ -12,6 +12,7 @@ export interface IRegistrationParams extends ILoginParams {
 export interface IUser extends IRegistrationParams {
   id: number;
   status: StatusType;
+  lastLoginAt: Date;
   createdAt: Date;
   updatedAt: Date;
 }

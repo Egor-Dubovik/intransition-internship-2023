@@ -12,6 +12,11 @@ const UserService = {
     const response = await $api.post<IUser>(API.login, data);
     return response.data;
   },
+
+  async getAllUsers(): Promise<IUser[]> {
+    const response = await $api.get<IUser[]>(API.user);
+    return response.data;
+  },
 };
 
 export default UserService;

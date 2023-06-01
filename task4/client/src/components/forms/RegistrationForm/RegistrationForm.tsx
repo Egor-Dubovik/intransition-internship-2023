@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 
 import { IRegistrationParams } from '../../../common/types/user';
 import useRedirect from '../../../hooks/useRedirect';
-import useRegistration from '../../../hooks/useRegistration';
+import useRegistration from '../../../hooks/user/useRegistration';
 import { ROUTES } from '../../../router/routes.enum';
 import ActionFormGroup from '../../auth/ActionFormGroup/ActionFormGroup';
 import ErrorMessage from '../../ErrorMessage/ErrorMessage';

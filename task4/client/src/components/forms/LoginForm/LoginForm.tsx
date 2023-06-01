@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { ILoginParams } from '../../../common/types/user';
-import useLogin from '../../../hooks/useLogin';
+import useLogin from '../../../hooks/user/useLogin';
 import useRedirect from '../../../hooks/useRedirect';
 import { ROUTES } from '../../../router/routes.enum';
 import ActionFormGroup from '../../auth/ActionFormGroup/ActionFormGroup';

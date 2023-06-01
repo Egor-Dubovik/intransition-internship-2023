@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 import { useMutation } from 'react-query';
-import { IAxiosError } from '../common/types/axios';
-import { IRegistrationParams, IUser } from '../common/types/user';
-import { UserContext } from '../context/UserContext';
-import UserService from '../services/UserService';
+import { IAxiosError } from '../../common/types/axios';
+import { IRegistrationParams, IUser } from '../../common/types/user';
+import { UserContext } from '../../context/UserContext';
+import UserService from '../../services/UserService';
 
 const useRegistration = () => {
   const { handleLogin } = useContext(UserContext);

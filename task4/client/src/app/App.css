@@ -19,9 +19,8 @@
 main {
   flex: 1 1 auto;
 }
-/* 
-[class*='__container'] {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 15px;
-} */
+
+h1 {
+  font-size: 24px;
+  font-weight: 500;
+}
