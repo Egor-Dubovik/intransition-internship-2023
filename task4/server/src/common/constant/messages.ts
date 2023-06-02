@@ -4,5 +4,6 @@ export const messages = {
   userByEmailNotFound: "User with sent email wasn't found",
   userByIdNotFound: "User with sent id wasn't found",
   incorrectPassword: "Incorrect password",
-  invalidProps: "invalid parameters passed",
+  invalidProps: "Invalid parameters passed",
+  blocked: "Your account has been blocked",
 };

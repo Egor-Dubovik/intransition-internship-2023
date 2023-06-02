@@ -4,6 +4,7 @@ import ApiError from "../exceptions/ApiError";
 import userService from "../services/userService";
 import { IUser } from "../common/types/user";
 import { messages } from "../common/constant/messages";
+import { Status } from "../common/constant/user";
 
 class UserController {
   async registration(req: Request, res: Response, next: NextFunction) {
@@ -24,7 +25,9 @@ class UserController {
     try {
       const { email, password } = req.body;
       const userData = await userService.login(email, password);
-      return res.json(userData);
+      return userData.toJSON().status === Status.Blocked
+        ? next(ApiError.badRequest(messages.blocked))
+        : res.json(userData);
     } catch (err) {
       next(err);
     }
