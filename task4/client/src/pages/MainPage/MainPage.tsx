@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
+import React from 'react';
 import AuthUserInfo from '../../modules/AuthUserInfo/AuthUserInfo';
 
-const MainPage: FC = () => {
+const MainPage = (): JSX.Element => {
   return (
     <main className="main-page">
       <AuthUserInfo />
