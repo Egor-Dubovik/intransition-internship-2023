@@ -29,7 +29,6 @@ const LoginForm: FC = () => {
       ) : (
         <Form onSubmit={handleSubmit(onSubmit)}>
           {err && <ErrorMessage message={err.response.data.message || err.message} />}
-
           <Form.Floating className="mb-3">
             <Form.Control
               id="email"

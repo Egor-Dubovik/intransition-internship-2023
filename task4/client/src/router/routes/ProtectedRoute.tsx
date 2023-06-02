@@ -1,15 +1,14 @@
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import { Navigate, Outlet } from 'react-router';
+import { UserContext } from '../../context/UserContext';
 
 interface IProtectedRouteProps {
   redirectPath: string;
 }
 
 const ProtectedRoute: FC<IProtectedRouteProps> = ({ redirectPath }) => {
-  if (!true) {
-    return <Navigate to={redirectPath} replace />;
-  }
-  return <Outlet />;
+  const { user } = useContext(UserContext);
+  return !user ? <Navigate to={redirectPath} replace /> : <Outlet />;
 };
 
 export default ProtectedRoute;

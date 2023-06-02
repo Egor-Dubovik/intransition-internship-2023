@@ -1,5 +1,6 @@
 import React, { FC, useContext, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
+import { Status } from '../common/constant/user';
 import { UserContext } from '../context/UserContext';
 import Footer from '../modules/Footer/Footer';
 import Header from '../modules/Header/Header';
@@ -12,7 +13,7 @@ const Root: FC = () => {
 
   const handleGetUser = async (id: number) => {
     const user = await UserService.getUser(id);
-    if (!user) {
+    if (!user || user.status === Status.Blocked) {
       navigate(ROUTES.REGISTRATION);
       handleLogout();
     }
