@@ -7,17 +7,18 @@ import UserService from '../../services/UserService';
 
 const useRegistration = () => {
   const { handleLogin } = useContext(UserContext);
-  const { mutate, isSuccess, isLoading, error } = useMutation({
+  const {
+    mutate: registration,
+    isSuccess,
+    isLoading,
+    error,
+  } = useMutation({
     mutationKey: ['registration'],
     mutationFn: (data: IRegistrationParams) => UserService.registration(data),
     onSuccess: (userData: IUser) => {
       handleLogin(userData);
     },
   });
-
-  const registration = async (data: IRegistrationParams) => {
-    mutate(data);
-  };
 
   const err = error as IAxiosError<{ message: string }>;
   return { registration, isSuccess, isLoading, err };

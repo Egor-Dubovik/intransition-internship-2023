@@ -11,7 +11,7 @@ const Root: FC = () => {
   const { user, handleLogout } = useContext(UserContext);
   const navigate = useNavigate();
 
-  const handleGetUser = async (id: number) => {
+  const handleCheckUser = async (id: number) => {
     const user = await UserService.getUser(id);
     if (!user || user.status === Status.Blocked) {
       navigate(ROUTES.REGISTRATION);
@@ -20,10 +20,7 @@ const Root: FC = () => {
   };
 
   useEffect(() => {
-    if (user) {
-      console.log(user);
-      handleGetUser(user.id);
-    }
+    if (user) handleCheckUser(user.id);
   }, []);
 
   return (
