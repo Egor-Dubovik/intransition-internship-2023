@@ -39,6 +39,15 @@ class UserController {
     }
   }
 
+  async getUser(req: Request, res: Response, next: NextFunction) {
+    try {
+      const users = await userService.getUser(Number(req.params.id));
+      return res.json(users);
+    } catch (err) {
+      next(err);
+    }
+  }
+
   async updateStatus(req: Request, res: Response, next: NextFunction) {
     try {
       const { id, status } = req.body;
@@ -51,8 +60,9 @@ class UserController {
 
   async delete(req: Request, res: Response, next: NextFunction) {
     try {
-      const user = await userService.delete(req.body.id);
-      return res.json(user);
+      const id = Number(req.query.id);
+      const number = await userService.delete(id);
+      return !!number ? res.json({ isDeleted: true, id }) : res.json({ isDeleted: false });
     } catch (err) {
       next(err);
     }

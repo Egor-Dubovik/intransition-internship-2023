@@ -6,9 +6,10 @@ import sequelize from "../db";
 const User = sequelize.define(Models.User, {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   name: { type: DataTypes.STRING(StringLength.Medium) },
-  email: { type: DataTypes.STRING(StringLength.Medium), unique: true },
-  password: { type: DataTypes.STRING },
+  email: { type: DataTypes.STRING(StringLength.Medium), allowNull: false },
+  password: { type: DataTypes.STRING, allowNull: false },
   status: { type: DataTypes.STRING, defaultValue: Status.Active },
+  lastLoginAt: { type: DataTypes.DATE },
 });
 
 export default User;

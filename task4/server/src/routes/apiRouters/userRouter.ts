@@ -12,6 +12,7 @@ userRouter.post(
 userRouter.post("/login", userController.login);
 userRouter.put("/", userController.updateStatus);
 userRouter.get("/", userController.getAllUsers);
+userRouter.get("/:id", userController.getUser);
 userRouter.delete("/", userController.delete);
 
 export default userRouter;

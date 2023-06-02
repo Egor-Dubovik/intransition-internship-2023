@@ -12,6 +12,7 @@ class UserService {
     if (candidate) throw ApiError.badRequest(messages.userAlreadyExists(email as string));
     const hashPassword = await bcrypt.hash(password, 5);
     const user = await User.create({ ...data, password: hashPassword });
+    await this.updateLastLogin(user);
     return user;
   }
 
@@ -21,7 +22,14 @@ class UserService {
     const storedPassword = user.get("password") as string;
     const isPassEquals = await bcrypt.compare(password, storedPassword);
     if (!isPassEquals) throw ApiError.badRequest(messages.incorrectPassword);
+    await this.updateLastLogin(user);
     return user;
+  }
+
+  async updateLastLogin(user: Model<IUser>): Promise<void> {
+    const lastLoginAt = new Date();
+    user.set("lastLoginAt", lastLoginAt);
+    await user.save();
   }
 
   async getAllUsers(): Promise<Model<IUser>[]> {
@@ -29,10 +37,16 @@ class UserService {
     return users;
   }
 
-  async updateStatus(id: number, status: StatusType): Promise<number> {
+  async getUser(id: number): Promise<Model<IUser> | null> {
+    const user = await User.findOne({ where: { id } });
+    return user;
+  }
+
+  async updateStatus(id: number, status: StatusType): Promise<Model<IUser> | null | undefined> {
     if (!id || !status) throw ApiError.badRequest(messages.invalidProps);
-    const user = await User.update({ status: status }, { where: { id: id } });
-    return user[0];
+    await User.update({ status }, { where: { id } });
+    const user = await User.findOne({ where: { id } });
+    return user;
   }
 
   async delete(id: number): Promise<number> {

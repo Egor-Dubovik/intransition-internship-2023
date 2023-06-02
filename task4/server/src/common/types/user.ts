@@ -6,6 +6,7 @@ export interface IUser {
   email: string;
   password: string;
   status?: StatusType;
+  lastLoginAt: Date;
   createdAt?: Date;
   updatedAt?: Date;
 }
