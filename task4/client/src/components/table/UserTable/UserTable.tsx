@@ -21,7 +21,11 @@ const UserTable: FC<IUserTableProps> = ({
     <>
       {allUsers ? (
         <Table bordered hover responsive variant="dark">
-          <TableHeader onSelectAll={toggleSelectAll} />
+          <TableHeader
+            users={allUsers}
+            selectedUsers={selectedUsers}
+            onSelectAll={toggleSelectAll}
+          />
           <TableBody
             users={allUsers}
             selectedFields={selectedUsers}
