@@ -5,9 +5,16 @@ export interface IUserData {
   phone: string;
 }
 
-export interface IFakeDataParams {
+export interface IFakeParams {
   locale: string;
-  page: number;
   seed: number;
   errorCount: number;
+}
+
+export interface IFakeDataParams extends IFakeParams {
+  page: number;
+}
+
+export interface IFakeDataArrayParams extends IFakeParams {
+  pageAmount: string;
 }

@@ -1,9 +1,25 @@
 import { allFakers, Faker } from "@faker-js/faker";
 import { PAGE_SIZE } from "../common/constant/pageConstants";
-import { IFakeDataParams, IUserData } from "../common/types/user";
+import { IFakeDataArrayParams, IFakeDataParams, IUserData } from "../common/types/user";
 import DataManipulator from "./dataManipulator";
 
 class GeneratorService {
+  async getFakeDataArray(params: IFakeDataArrayParams) {
+    const { locale, seed, pageAmount, errorCount } = params;
+    const pageAmountNumber = Number(pageAmount);
+
+    const fakeDataArray = (await Array.from({ length: pageAmountNumber }).reduce(
+      async (previousPromise, _, index) => {
+        const previousData = (await previousPromise) as IUserData[];
+        const page = index + 1;
+        const fakeData = await this.generateFakeData({ locale, seed, page, errorCount });
+        return previousData.concat(fakeData);
+      },
+      Promise.resolve([])
+    )) as IUserData[];
+    return fakeDataArray;
+  }
+
   async generateFakeData(params: IFakeDataParams): Promise<IUserData[]> {
     const { locale, page, seed, errorCount } = params;
     const myFaker = allFakers[locale];
