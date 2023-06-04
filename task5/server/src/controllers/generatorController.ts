@@ -22,5 +22,3 @@ class GeneratorController {
 }
 
 export default new GeneratorController();
-
-// Борислав Суханов

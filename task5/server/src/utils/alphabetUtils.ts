@@ -1,15 +1,4 @@
-export const getLocaleForRegion = (region: string): string => {
-  switch (region) {
-    case "USA":
-      return "en";
-    case "Poland":
-      return "pl";
-    case "Russia":
-      return "ru";
-    default:
-      return "en";
-  }
-};
+import { Faker } from "@faker-js/faker";
 
 export const generateAlphabetForLocale = (locale: string): string[] => {
   switch (locale) {
@@ -32,11 +21,11 @@ export const generateAlphabet = (start: number, end: number): string[] => {
   return alphabet;
 };
 
-export const getRandomCharacterFromAlphabet = (alphabet: string[]): string => {
-  const randomIndex = Math.floor(Math.random() * alphabet.length);
+export const getRandomCharacterFromAlphabet = (alphabet: string[], faker: Faker): string => {
+  const randomIndex = Math.floor(faker.number.float({ min: 0, max: 1 }) * alphabet.length);
   return alphabet[randomIndex];
 };
 
-export const getRandomDigit = (): string => {
-  return Math.floor(Math.random() * 10).toString();
+export const getRandomDigit = (faker: Faker): string => {
+  return Math.floor(faker.number.float({ min: 0, max: 1 }) * 10).toString();
 };
