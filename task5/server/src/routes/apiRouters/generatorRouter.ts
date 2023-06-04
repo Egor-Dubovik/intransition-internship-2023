@@ -1,7 +1,7 @@
 import { Router } from "express";
-import userController from "../../controllers/UserController";
+import generatorController from "../../controllers/generatorController";
 
-const userRouter = Router({});
-// userRouter.post("/registration", userController);
+const generatorRouter = Router({});
+generatorRouter.get("/users", generatorController.generateFakeData);
 
-export default userRouter;
+export default generatorRouter;
