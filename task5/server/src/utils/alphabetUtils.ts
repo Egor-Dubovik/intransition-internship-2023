@@ -36,3 +36,7 @@ export const getRandomCharacterFromAlphabet = (alphabet: string[]): string => {
   const randomIndex = Math.floor(Math.random() * alphabet.length);
   return alphabet[randomIndex];
 };
+
+export const getRandomDigit = (): string => {
+  return Math.floor(Math.random() * 10).toString();
+};
