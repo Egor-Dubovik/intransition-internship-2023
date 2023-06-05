@@ -1,55 +1,43 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/store/hooks';
-import { addUsers, selectParams, selectUsers, setParams } from '../../reducers/randomUsersSlice';
-import { getRandomUsers } from '../../services/RandomService';
+import { getRandomUsers } from '../../services/randomService';
+import { useObserver } from '../../hooks/useObserver';
+import {
+  addUsers,
+  selectIsFirstFetch,
+  selectParams,
+  selectUsers,
+  setParams,
+} from '../../reducers/randomUsersSlice';
 
-const TableBody = () => {
+const TableBody: FC = () => {
   const params = useAppSelector(selectParams);
   const randomUsers = useAppSelector(selectUsers);
+  const isFirstFetch = useAppSelector(selectIsFirstFetch);
   const dispatch = useAppDispatch();
   const lastElement = useRef(null);
-  const observer = useRef<IntersectionObserver | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    if (isLoading) return;
-    if (observer.current) observer.current.disconnect();
+  const addPage = (): void => {
+    if (isFirstFetch) {
+      const nextPage = params.page + 1;
+      dispatch(setParams({ ...params, page: nextPage }));
+    }
+  };
 
-    const handleIntersect: IntersectionObserverCallback = (entries) => {
-      if (entries[0].isIntersecting) {
-        console.log('div visibble');
-        addPage();
-      }
-    };
-    observer.current = new IntersectionObserver(handleIntersect);
-    if (lastElement.current) observer.current.observe(lastElement.current);
-  }, [isLoading]);
-
-  const loadMoreData = async () => {
-    console.log(params.page);
-    if (params.page >= 2) {
+  const loadMoreData = async (): Promise<void> => {
+    if (isFirstFetch) {
       setIsLoading(true);
-      console.log('randomUsers');
       const randomUsers = await getRandomUsers({ ...params });
       dispatch(addUsers(randomUsers));
       setIsLoading(false);
     }
   };
 
-  const addPage = () => {
-    if (params.page >= 2) {
-      const nextPage = params.page + 1;
-      dispatch(setParams({ ...params, page: nextPage }));
-    }
-  };
-
+  useObserver(lastElement, isLoading, addPage, [isLoading, isFirstFetch, randomUsers]);
   useEffect(() => {
     loadMoreData();
   }, [params.page]);
-
-  useEffect(() => {
-    console.log(randomUsers);
-  }, [randomUsers]);
 
   return (
     <>

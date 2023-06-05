@@ -1,16 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../app/store/store';
-import { INITIAL_PAGE } from '../common/constant/inputData';
+import { INITIAL_PROPS } from '../common/constant/initialProps';
 import { IUserData, IUserParams } from '../common/types/user';
 
 const initialState = {
   users: [] as IUserData[],
   params: {
-    locale: 'en',
-    seed: '0110',
-    errorCount: '0',
-    page: INITIAL_PAGE,
+    locale: INITIAL_PROPS.LOCALE,
+    seed: INITIAL_PROPS.SEED,
+    errorCount: INITIAL_PROPS.ERR_COUNT,
+    page: INITIAL_PROPS.PAGE,
   } as IUserParams,
+  isFirstFetch: false,
 };
 
 const randomUsersSlice = createSlice({
@@ -26,10 +27,15 @@ const randomUsersSlice = createSlice({
     setParams: (state, action: PayloadAction<IUserParams>) => {
       state.params = action.payload;
     },
+
+    setIsFirstFetch: (state, action: PayloadAction<boolean>) => {
+      state.isFirstFetch = action.payload;
+    },
   },
 });
 
-export const { setUsers, addUsers, setParams } = randomUsersSlice.actions;
+export const { setUsers, addUsers, setParams, setIsFirstFetch } = randomUsersSlice.actions;
 export const selectUsers = (state: RootState) => state.randomUsers.users;
+export const selectIsFirstFetch = (state: RootState) => state.randomUsers.isFirstFetch;
 export const selectParams = (state: RootState) => state.randomUsers.params;
 export const randomUsersReducer = randomUsersSlice.reducer;
