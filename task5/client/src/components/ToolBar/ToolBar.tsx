@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useAppDispatch, useAppSelector } from '../../app/store/hooks';
-import { countryOptions } from '../../common/constant/inputData';
+import { countryOptions, INITIAL_PAGE } from '../../common/constant/inputData';
 import { IUserData } from '../../common/types/user';
 import { selectParams, setParams, setUsers } from '../../reducers/randomUsersSlice';
 import { getRandomUsers } from '../../services/RandomService';
@@ -9,10 +9,10 @@ import { generateRandomNumber } from '../../utils/generateRandomNumber';
 import './ToolBar.css';
 
 const ToolBar: FC = () => {
+  // const { page } = useAppSelector(selectParams);
   const [locale, setLocale] = useState('en');
   const [errorCount, setErrorCount] = useState('0');
   const [seed, setSeed] = useState('0110');
-  const { page } = useAppSelector(selectParams);
   const dispatch = useAppDispatch();
 
   const handleRandom = () => {
@@ -22,7 +22,7 @@ const ToolBar: FC = () => {
 
   const handleFetchUsers = async () => {
     let allUsers: IUserData[] = [];
-    for (let i = 1; i <= page; i++) {
+    for (let i = 1; i <= 2; i++) {
       const randomUsers = await getRandomUsers({ locale, seed, errorCount, page: i });
       allUsers = allUsers.concat(randomUsers);
     }
@@ -30,10 +30,9 @@ const ToolBar: FC = () => {
   };
 
   useEffect(() => {
-    console.log(page);
-    if (page < 3) handleFetchUsers();
-    dispatch(setParams({ page, locale, seed, errorCount }));
-  }, [errorCount, locale, seed, page]);
+    dispatch(setParams({ page: INITIAL_PAGE, locale, seed, errorCount }));
+    handleFetchUsers();
+  }, [errorCount, locale, seed]);
 
   return (
     <div className="toolbar">

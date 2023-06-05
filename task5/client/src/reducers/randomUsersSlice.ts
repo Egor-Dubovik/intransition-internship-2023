@@ -6,6 +6,9 @@ import { IUserData, IUserParams } from '../common/types/user';
 const initialState = {
   users: [] as IUserData[],
   params: {
+    locale: 'en',
+    seed: '0110',
+    errorCount: '0',
     page: INITIAL_PAGE,
   } as IUserParams,
 };
