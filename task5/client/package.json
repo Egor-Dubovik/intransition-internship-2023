@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite --open",
     "build": "tsc && vite build",
-    "start": "vite",
+    "start": "serve dist -s -n -L -p $PORT",
     "preview": "vite preview",
     "clean": "rd /s /q dist",
     "fix": "eslint . --fix",
@@ -24,7 +24,8 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.44.2",
     "react-redux": "^8.0.7",
-    "react-router-dom": "^6.9.0"
+    "react-router-dom": "^6.9.0",
+    "serve": "^14.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.27",
