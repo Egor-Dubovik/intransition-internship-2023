@@ -1,9 +1,12 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
+import ToolBar from '../../components/ToolBar/ToolBar';
 const MainPage = (): JSX.Element => {
   return (
     <main className="main-page">
-      <Container>MainPage</Container>
+      <Container>
+        <ToolBar />
+      </Container>
     </main>
   );
 };

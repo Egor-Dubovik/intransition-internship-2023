@@ -1,0 +1,29 @@
+.tool-form__box {
+  display: flex;
+  column-gap: 15px;
+}
+
+.tool-form__group {
+  flex: 0 0 50%;
+  margin-bottom: 15px;
+}
+
+._seed {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.tool-form__item {
+  width: 100%;
+}
+
+@media (max-width: 767.9px) {
+  .tool-form__box {
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
+  }
+  .tool-form__group {
+    flex: 0 0 100%;
+  }
+}
