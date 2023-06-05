@@ -4,7 +4,8 @@ import cors from "cors";
 import router from "./routes/index";
 import { errorMiddleware } from "./midleware/errorMiddleware";
 
-const PORT = process.env.PORT || 5000;
+dotenv.config();
+const PORT = process.env.PORT || 8000;
 const app = express();
 
 app.use(express.json());
