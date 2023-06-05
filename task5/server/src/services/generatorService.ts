@@ -37,7 +37,7 @@ class GeneratorService {
     const phone = faker.phone.number();
     const data = { fullName, address, phone };
     const dataWithErrors = this.addErrorToField(faker, data, errorCount, locale);
-    return errorCount > 0 ? { id, ...dataWithErrors } : { id, ...data };
+    return errorCount !== 0 ? { id, ...dataWithErrors } : { id, ...data };
   }
 
   generateAddress(faker: Faker): string {
