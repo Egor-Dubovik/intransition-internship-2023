@@ -1,13 +1,17 @@
-import React, { FC } from 'react';
+import React from 'react';
+import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
+import { store } from './store/store';
 import router from '../router/router';
 import './App.css';
 
-const App: FC = () => {
+const App = (): JSX.Element => {
   return (
-    <div className="App">
-      <RouterProvider router={router} />
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        <RouterProvider router={router} />
+      </div>
+    </Provider>
   );
 };
 

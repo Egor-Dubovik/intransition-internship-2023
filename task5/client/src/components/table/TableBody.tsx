@@ -1,13 +1,15 @@
 import React from 'react';
-import { IUserData } from '../../common/types/user';
+import { useAppSelector } from '../../app/store/hooks';
+import { selectUsers } from '../../reducers/randomUsersSlice';
 
 const TableBody = () => {
-  const randomUsers = [] as IUserData[];
+  const randomUsers = useAppSelector(selectUsers);
 
   return (
     <tbody className="table__body">
-      {randomUsers.map((user) => (
+      {randomUsers.map((user, index) => (
         <tr key={user.id}>
+          <td className="table__field">{index + 1}</td>
           <td className="table__field">{user.id}</td>
           <td className="table__field">{user.fullName}</td>
           <td className="table__field">{user.address}</td>

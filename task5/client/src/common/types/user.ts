@@ -4,3 +4,10 @@ export interface IUserData {
   address: string;
   phone: string;
 }
+
+export interface IUserParams {
+  locale: string;
+  seed: string;
+  page: number;
+  errorCount: string;
+}
