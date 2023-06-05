@@ -18,7 +18,7 @@ const TableBody = () => {
     const handleIntersect: IntersectionObserverCallback = (entries) => {
       if (entries[0].isIntersecting) {
         console.log('div visibble');
-        loadMoreData();
+        addPage();
       }
     };
     observer.current = new IntersectionObserver(handleIntersect);
@@ -29,13 +29,27 @@ const TableBody = () => {
     console.log(params.page);
     if (params.page >= 2) {
       setIsLoading(true);
-      const nextPage = params.page + 1;
-      const randomUsers = await getRandomUsers({ ...params, page: nextPage });
+      console.log('randomUsers');
+      const randomUsers = await getRandomUsers({ ...params });
       dispatch(addUsers(randomUsers));
-      dispatch(setParams({ ...params, page: nextPage }));
       setIsLoading(false);
     }
   };
+
+  const addPage = () => {
+    if (params.page >= 2) {
+      const nextPage = params.page + 1;
+      dispatch(setParams({ ...params, page: nextPage }));
+    }
+  };
+
+  useEffect(() => {
+    loadMoreData();
+  }, [params.page]);
+
+  useEffect(() => {
+    console.log(randomUsers);
+  }, [randomUsers]);
 
   return (
     <>

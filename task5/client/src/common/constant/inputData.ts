@@ -5,4 +5,4 @@ export const countryOptions = [
   { value: 'ru', label: 'Russia' },
 ];
 
-export const INITIAL_PAGE = 2;
+export const INITIAL_PAGE = 1;

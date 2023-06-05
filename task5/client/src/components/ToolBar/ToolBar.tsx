@@ -30,7 +30,7 @@ const ToolBar: FC = () => {
   };
 
   useEffect(() => {
-    dispatch(setParams({ page: INITIAL_PAGE, locale, seed, errorCount }));
+    dispatch(setParams({ page: 2, locale, seed, errorCount }));
     handleFetchUsers();
   }, [errorCount, locale, seed]);
 
