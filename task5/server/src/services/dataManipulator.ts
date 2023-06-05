@@ -10,8 +10,10 @@ class DataManipulator {
   }
 
   static deleteRandomCharacter(field: string, errorCount: number, faker: Faker): string {
-    if (errorCount >= field.length) return "";
-    const { count, probability } = this.getErrorDetails(errorCount);
+    let currentCount = errorCount;
+    if (errorCount >= field.length)
+      currentCount = faker.number.float({ min: 0, max: field.length / 2 });
+    const { count, probability } = this.getErrorDetails(currentCount);
     let modifiedField = field;
     for (let i = 0; i < count; i++)
       modifiedField = CharacterManipulator.deleteCharacter(modifiedField, faker);
