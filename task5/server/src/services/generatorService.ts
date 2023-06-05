@@ -35,9 +35,14 @@ class GeneratorService {
     const fullName = faker.person.fullName();
     const address = this.generateAddress(faker);
     const phone = faker.phone.number();
-    const data = { fullName, address, phone };
-    const dataWithErrors = this.addErrorToField(faker, data, errorCount, locale);
-    return errorCount !== 0 ? { id, ...dataWithErrors } : { id, ...data };
+    let fieldWithError: keyof IUserData | undefined;
+    const data = { id, fullName, address, phone };
+
+    const randomField = faker.helpers.arrayElement(
+      Object.keys(data).filter((field) => field !== "id")
+    );
+    const fieldWitError = this.addErrorToField(faker, data[randomField], errorCount, locale);
+    return errorCount !== 0 ? { ...data, [randomField]: fieldWitError } : data;
   }
 
   generateAddress(faker: Faker): string {
@@ -46,30 +51,23 @@ class GeneratorService {
     return faker.number.float({ min: 0, max: 1 }) < 0.5 ? address : addressWithState;
   }
 
-  addErrorToField(faker: Faker, userData: IUserData, errorCount: number, locale: string) {
-    const newData = { ...userData };
-    for (const field in newData) {
-      const randomErrorType = DataManipulator.getRandomErrorType(faker);
-      switch (randomErrorType) {
-        case "deleteRandomCharacter":
-          newData[field] = DataManipulator.deleteRandomCharacter(newData[field], errorCount, faker);
-          break;
-        case "addRandomCharacter":
-          field === "phone"
-            ? (newData[field] = DataManipulator.addRandomDigit(newData[field], errorCount, faker))
-            : (newData[field] = DataManipulator.addRandomCharacter(
-                newData[field],
-                errorCount,
-                locale,
-                faker
-              ));
-          break;
-        case "swapRandomCharacters":
-          newData[field] = DataManipulator.swapRandomCharacters(newData[field], errorCount, faker);
-          break;
-      }
+  addErrorToField(faker: Faker, field: string, errorCount: number, locale: string) {
+    let newfield = field;
+    const randomErrorType = DataManipulator.getRandomErrorType(faker);
+    switch (randomErrorType) {
+      case "deleteRandomCharacter":
+        newfield = DataManipulator.deleteRandomCharacter(field, errorCount, faker);
+        break;
+      case "addRandomCharacter":
+        field === "phone"
+          ? (newfield = DataManipulator.addRandomDigit(field, errorCount, faker))
+          : (newfield = DataManipulator.addRandomCharacter(field, errorCount, locale, faker));
+        break;
+      case "swapRandomCharacters":
+        newfield = DataManipulator.swapRandomCharacters(field, errorCount, faker);
+        break;
     }
-    return newData;
+    return newfield;
   }
 }
 
