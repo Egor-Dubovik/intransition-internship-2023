@@ -1,5 +1,4 @@
-export const BASE_URL = 'http://localhost:5000';
-// export const BASE_URL = 'https://user-auth-table-c3rx.onrender.com';
+export const BASE_URL = 'https://server-production-4494.up.railway.app';
 export const API_URL = `${BASE_URL}/faker`;
 
 export const API = {
