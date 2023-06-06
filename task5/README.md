@@ -6,7 +6,7 @@ React, Redux toolkit, TS, Axios, Bootstrap
 
 ## Back-end:
 
-Node JS, TS, Express, Sequelize, Mysql2, Fast-csv
+Node JS, TS, Express, Fast-csv
 
 ## Technical Specification:
 
