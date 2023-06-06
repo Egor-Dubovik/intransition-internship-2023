@@ -1,3 +1,3 @@
 ## Itransition internship 2023
 
-Every sadness has its own README file
+Every task has its own README file
