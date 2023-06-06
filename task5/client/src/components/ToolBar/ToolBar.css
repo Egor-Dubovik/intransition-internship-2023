@@ -1,3 +1,13 @@
+.toolbar {
+  margin-bottom: 20px;
+}
+
+.tool-form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+}
+
 .tool-form__box {
   display: flex;
   column-gap: 15px;
@@ -5,7 +15,6 @@
 
 .tool-form__group {
   flex: 0 0 50%;
-  margin-bottom: 15px;
 }
 
 ._seed {
@@ -18,12 +27,22 @@
   width: 100%;
 }
 
+._export-scv {
+  align-self: flex-end;
+}
+
 @media (max-width: 767.9px) {
   .tool-form__box {
     flex-wrap: wrap;
-    flex-direction: column-reverse;
   }
   .tool-form__group {
     flex: 0 0 100%;
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  ._export-scv {
+    width: 100%;
   }
 }

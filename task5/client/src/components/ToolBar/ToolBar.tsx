@@ -7,13 +7,18 @@ import { getRandomUsers } from '../../services/randomService';
 import { generateRandomNumber } from '../../utils/generateRandomNumber';
 import { countryOptions, INPUT_ERR, SLEDER_ERR } from '../../common/constant/inputData';
 import { INITIAL_PROPS } from '../../common/constant/initialProps';
+import AmountModal from '../CsvModal';
 import './ToolBar.css';
 
 const ToolBar: FC = () => {
   const [locale, setLocale] = useState<string>(INITIAL_PROPS.LOCALE);
   const [errorCount, setErrorCount] = useState<string>(INITIAL_PROPS.ERR_COUNT);
   const [seed, setSeed] = useState<string>(INITIAL_PROPS.SEED);
+  const [showModal, setShowModal] = useState(false);
   const dispatch = useAppDispatch();
+
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
 
   const handleRandom = () => {
     const randomNumber = generateRandomNumber();
@@ -38,6 +43,7 @@ const ToolBar: FC = () => {
 
   return (
     <div className="toolbar">
+      <AmountModal show={showModal} close={handleClose} />
       <Form className="toolbar__form tool-form">
         <div className="tool-form__box">
           <Form.Group className="tool-form__group">
@@ -87,6 +93,9 @@ const ToolBar: FC = () => {
               onChange={(event) => setErrorCount(event.target.value)}
             />
           </Form.Group>
+          <Button className="button _export-scv" variant="outline-primary" onClick={handleShow}>
+            Export to SCV
+          </Button>
         </div>
       </Form>
     </div>

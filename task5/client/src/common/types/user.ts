@@ -11,3 +11,7 @@ export interface IUserParams {
   page: number;
   errorCount: string;
 }
+
+export interface IUserByAmountParams extends IUserParams {
+  pageAmount: number;
+}

@@ -15,3 +15,9 @@ export const INPUT_ERR = {
   MIN: 0,
   MAX: 1000,
 };
+
+export const RECORDS_AMOUNT = {
+  MIN: 10,
+  STEP: 10,
+  INIT: 20,
+};
