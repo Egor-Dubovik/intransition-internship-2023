@@ -26,6 +26,7 @@ const ToolBar: FC = () => {
   };
 
   const handleFetchUsers = async () => {
+    if (!errorCount.length) return;
     dispatch(setIsFirstFetch(false));
     let allUsers: IUserData[] = [];
     for (let i = 1; i <= INITIAL_PROPS.PAGE; i++) {
