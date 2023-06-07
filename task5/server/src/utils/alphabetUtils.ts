@@ -1,15 +1,18 @@
 import { Faker } from "@faker-js/faker";
+import { ALPHABET } from "../common/constant/alphabet";
+import { PAGE_SIZE } from "../common/constant/pageConstats";
+import { LOCALE, RANDOM_NUMS } from "../common/constant/randomDataConstants";
 
 export const generateAlphabetForLocale = (locale: string): string[] => {
   switch (locale) {
-    case "en":
-      return generateAlphabet(65, 90);
-    case "pl":
-      return generateAlphabet(260, 378);
-    case "ru":
-      return generateAlphabet(1040, 1071);
+    case LOCALE.EN:
+      return generateAlphabet(ALPHABET.EN.START, ALPHABET.EN.END);
+    case LOCALE.PL:
+      return generateAlphabet(ALPHABET.PL.START, ALPHABET.PL.END);
+    case LOCALE.RU:
+      return generateAlphabet(ALPHABET.RU.START, ALPHABET.RU.END);
     default:
-      return generateAlphabet(65, 90);
+      return generateAlphabet(ALPHABET.EN.START, ALPHABET.EN.END);
   }
 };
 
@@ -22,10 +25,13 @@ export const generateAlphabet = (start: number, end: number): string[] => {
 };
 
 export const getRandomCharacterFromAlphabet = (alphabet: string[], faker: Faker): string => {
-  const randomIndex = Math.floor(faker.number.float({ min: 0, max: 1 }) * alphabet.length);
+  const randomIndex = Math.floor(
+    faker.number.float({ min: RANDOM_NUMS.MIN, max: RANDOM_NUMS.MAX }) * alphabet.length
+  );
   return alphabet[randomIndex];
 };
 
 export const getRandomDigit = (faker: Faker): string => {
-  return Math.floor(faker.number.float({ min: 0, max: 1 }) * 10).toString();
+  const randomFloat = faker.number.float({ min: RANDOM_NUMS.MIN, max: RANDOM_NUMS.MAX });
+  return Math.floor(randomFloat * PAGE_SIZE).toString();
 };
