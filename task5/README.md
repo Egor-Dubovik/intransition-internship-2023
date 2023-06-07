@@ -8,6 +8,14 @@ React, Redux toolkit, TS, Axios, Bootstrap
 
 Node JS, TS, Express, Fast-csv
 
+## Deploy:
+
+https://fake-generator.up.railway.app
+
+## Video-link(download):
+
+https://www.dropbox.com/s/smz13sr2a0523d9/task5.itransition.mp4?dl=1
+
 ## Technical Specification:
 
 Implement a Web-application for the fake (random) user data generation.
