@@ -1,0 +1,16 @@
+.auth-page {
+  padding-top: 20px;
+}
+
+form {
+  max-width: 500px;
+}
+
+label {
+  color: #242424;
+}
+
+input {
+  width: 100%;
+  box-sizing: border-box;
+}
