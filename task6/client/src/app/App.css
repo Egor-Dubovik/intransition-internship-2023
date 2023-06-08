@@ -10,17 +10,5 @@
 .App {
   position: relative;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
   overflow: hidden;
-}
-
-main {
-  flex: 1 1 auto;
-}
-
-h1 {
-  font-size: 24px;
-  font-weight: 500;
-  margin: 0;
 }

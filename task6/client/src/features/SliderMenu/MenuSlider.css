@@ -1,0 +1,16 @@
+.ant-layout .ant-layout-sider._visible {
+  position: relative;
+  left: 0;
+}
+
+@media (max-width: 480px) {
+  .ant-layout .ant-layout-sider {
+    position: absolute;
+    min-height: 100vh;
+  }
+
+  .menu-slider {
+    left: -100px;
+    transition: all 0.3s ease;
+  }
+}

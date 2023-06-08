@@ -1,12 +1,20 @@
 .header {
-  padding: 15px 0;
+  height: auto;
+  padding: 0;
 }
 
 .header__container {
-  display: flex;
-  justify-content: space-between;
+  padding: 0 16px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+}
+
+.header__button_slider {
+  justify-self: start;
+  font-size: 16px;
 }
 
 .header__logo {
-  margin-right: 30px;
+  justify-self: center;
 }

@@ -1,7 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { sliderMenuReducer } from '../../features/SliderMenu/sliderMenuSlice';
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    menu: sliderMenuReducer,
+  },
 });
 
 export type AppDispatch = typeof store.dispatch;

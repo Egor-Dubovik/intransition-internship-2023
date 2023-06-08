@@ -1,14 +1,14 @@
 .logo {
   display: flex;
   align-items: center;
-  column-gap: 8px;
+  column-gap: 6px;
   cursor: pointer;
 }
 
 .logo__icon {
   position: relative;
-  width: 18px;
-  height: 18px;
+  width: 24px;
+  height: 24px;
 }
 
 .logo__icon svg {
@@ -21,5 +21,6 @@
 }
 
 .logo__name {
-  font-size: 18px;
+  font-size: 16px;
+  white-space: nowrap;
 }
