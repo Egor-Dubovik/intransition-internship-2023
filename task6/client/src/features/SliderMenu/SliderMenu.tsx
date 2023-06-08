@@ -2,7 +2,6 @@ import React, { FC } from 'react';
 import { Layout, Menu } from 'antd';
 import { useAppSelector } from '../../app/store/hooks';
 import { selectIsVisible } from './sliderMenuSlice';
-import { Link } from 'react-router-dom';
 import { menuItems } from './menuItems';
 import './MenuSlider.css';
 
@@ -26,16 +25,13 @@ const MenuSlider: FC<IMenuSliderProps> = ({ collapsed, setCollapsed }) => {
       collapsed={collapsed}
     >
       <div className="demo-logo-vertical" />
-
-      <Menu theme="dark" mode="inline" onClick={handleCloseMenu} defaultSelectedKeys={['1']}>
-        {menuItems.map((item) => (
-          <Menu.Item key={item.key} icon={item.icon}>
-            <Link to={item.link}>
-              <span>{item.label}</span>
-            </Link>
-          </Menu.Item>
-        ))}
-      </Menu>
+      <Menu
+        theme="dark"
+        mode="inline"
+        onClick={handleCloseMenu}
+        defaultSelectedKeys={['1']}
+        items={menuItems}
+      />
     </Layout.Sider>
   );
 };
