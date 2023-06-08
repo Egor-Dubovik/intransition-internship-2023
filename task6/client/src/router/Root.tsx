@@ -2,8 +2,8 @@ import React, { FC, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Layout } from 'antd';
 import MenuSlider from '../features/SliderMenu/SliderMenu';
-import Footer from '../modules/Footer/Footer';
-import Header from '../modules/Header/Header';
+import Footer from '../components/Footer/Footer';
+import Header from '../components/Header/Header';
 import './Root.css';
 
 const Root: FC = () => {

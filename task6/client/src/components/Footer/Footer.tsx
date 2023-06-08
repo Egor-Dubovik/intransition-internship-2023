@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Layout } from 'antd';
 import { Link } from 'react-router-dom';
-import ItransitionLogo from '../../components/logos/ItransitionLogo/ItransitionLogo';
+import ItransitionLogo from '../logos/ItransitionLogo/ItransitionLogo';
 import './Footer.css';
 
 const Footer: FC = () => {

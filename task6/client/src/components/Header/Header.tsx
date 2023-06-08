@@ -3,7 +3,7 @@ import { Button, Layout, theme } from 'antd';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { useAppDispatch } from '../../app/store/hooks';
 import { setIsVisible } from '../../features/SliderMenu/sliderMenuSlice';
-import Logo from '../../components/logos/Logo/Logo';
+import Logo from '../logos/Logo/Logo';
 import './Header.css';
 
 interface IHeaderProps {
