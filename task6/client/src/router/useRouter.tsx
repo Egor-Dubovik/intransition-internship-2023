@@ -6,6 +6,8 @@ import LoginPage from '../pages/LoginPage/LoginPage';
 import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
 import { ROUTES } from './routes.enum';
 import Root from './Root';
+import MessengerPage from '../pages/MessengerPage/MessengerPage';
+import Chat from '../pages/Chat/Chat';
 
 const useRouter = () => {
   const routes = createRoutesFromElements(
@@ -16,6 +18,8 @@ const useRouter = () => {
       <Route element={<ProtectedRoute redirectPath={ROUTES.MAIN} condition={!!false} />}>
         <Route path={ROUTES.LOGIN} element={<LoginPage />} />
       </Route>
+      <Route path={ROUTES.MESSANGER} element={<MessengerPage />} />
+      <Route path={ROUTES.CHAT + '/:id'} element={<Chat />} />
       <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage />} />
       <Route path={ROUTES.BAD} element={<Navigate to={ROUTES.NOT_FOUND} replace />} />
     </Route>
