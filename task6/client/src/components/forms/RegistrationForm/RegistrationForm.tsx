@@ -6,7 +6,7 @@ import { IRegistrationParams } from '../../../common/types/user';
 import useRedirect from '../../../hooks/useRedirect';
 import useRegistration from '../../../hooks/user/useRegistration';
 import { ROUTES } from '../../../router/routes.enum';
-import ActionFormGroup from '../../LoginForm/LoginForm';
+import ActionFormGroup from '../../../pages/LoginPage/LoginPage';
 import ErrorMessage from '../../ErrorMessage/ErrorMessage';
 import Loader from '../../Loader/Loader';
 

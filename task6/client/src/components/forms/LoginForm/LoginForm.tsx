@@ -5,7 +5,7 @@ import { ILoginParams } from '../../../common/types/user';
 import useLogin from '../../../hooks/user/useLogin';
 import useRedirect from '../../../hooks/useRedirect';
 import { ROUTES } from '../../../router/routes.enum';
-import ActionFormGroup from '../../LoginForm/LoginForm';
+import ActionFormGroup from '../../../pages/LoginPage/LoginPage';
 import ErrorMessage from '../../ErrorMessage/ErrorMessage';
 import Loader from '../../Loader/Loader';
 
