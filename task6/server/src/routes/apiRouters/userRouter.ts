@@ -1,7 +1,8 @@
-import { Router } from "express";
 import userController from "../../controllers/UserController";
+import { body } from "express-validator";
+import { Router } from "express";
 
 const userRouter = Router({});
-userRouter.post("/login", userController.login);
+userRouter.post("/login", body("nickName").isLength({ min: 3, max: 32 }), userController.login);
 
 export default userRouter;
