@@ -1,5 +1,5 @@
 import React from 'react';
-import LoginForm from '../../components/form/LoginForm/LoginForm';
+import LoginForm from '../../features/LoginForm/LoginForm';
 import { Typography } from 'antd';
 import './LoginPage.css';
 

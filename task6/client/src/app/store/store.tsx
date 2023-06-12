@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { loginAPI } from '../../components/form/LoginForm/loginAPI';
+import { loginAPI } from '../../features/LoginForm/loginAPI';
+import { userReducer } from '../../features/LoginForm/userSlice';
 import { sliderMenuReducer } from '../../features/SliderMenu/sliderMenuSlice';
 
 export const store = configureStore({
   reducer: {
+    user: userReducer,
     menu: sliderMenuReducer,
     [loginAPI.reducerPath]: loginAPI.reducer,
   },

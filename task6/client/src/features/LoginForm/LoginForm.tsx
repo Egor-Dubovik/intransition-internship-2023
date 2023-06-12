@@ -1,25 +1,27 @@
 import React, { FC } from 'react';
 import { Button, Form, Input, Tooltip } from 'antd';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { ILoginProps } from '../../../pages/LoginPage/types';
+import { ILoginProps } from '../../pages/LoginPage/types';
 import { InfoCircleOutlined, UserOutlined } from '@ant-design/icons';
-import './LoginForm.css';
 import { useLoginMutation } from './loginAPI';
-import Loader from '../../Loader/Loader';
-import { ERR_MESSAGE } from '../../../common/constant/error';
-import ErrorMessage from '../../ErrorMessage/ErrorMessage';
+import Loader from '../../components/Loader/Loader';
+import { ERR_MESSAGE } from '../../common/constant/error';
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+import { useLogin } from '../../hooks/useLogin';
+import './LoginForm.css';
 
 const LoginForm: FC = () => {
   const { handleSubmit, setValue } = useForm<ILoginProps>();
-  const [login, { isLoading, error }] = useLoginMutation();
+  const [login, { data, isLoading, isSuccess, error }] = useLoginMutation();
 
   const handleChangeNick = (event: React.ChangeEvent<HTMLInputElement>) =>
     setValue('nickName', event.target.value);
 
   const onSubmit: SubmitHandler<ILoginProps> = (data) => {
-    console.log(data);
     login(data);
   };
+
+  useLogin(isSuccess, data);
 
   return (
     <>

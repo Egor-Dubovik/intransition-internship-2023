@@ -1,8 +1,9 @@
 import React, { FC, useEffect } from 'react';
 import { Button, Layout, theme } from 'antd';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
-import { useAppDispatch } from '../../app/store/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/store/hooks';
 import { setIsVisible } from '../../features/SliderMenu/sliderMenuSlice';
+import { selectUser, setUserData } from '../../features/LoginForm/userSlice';
 import Logo from '../logos/Logo/Logo';
 import './Header.css';
 
@@ -12,6 +13,7 @@ interface IHeaderProps {
 }
 
 const Header: FC<IHeaderProps> = ({ collapsed, setCollapsed }) => {
+  const user = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
   const {
     token: { colorBgContainer },
@@ -23,8 +25,9 @@ const Header: FC<IHeaderProps> = ({ collapsed, setCollapsed }) => {
     <MenuFoldOutlined rev="icon" />
   );
 
-  const handleShowMenu = () => {
-    setCollapsed(!collapsed);
+  const handleLogout = () => {
+    dispatch(setUserData(null));
+    localStorage.removeItem('user');
   };
 
   useEffect(() => {
@@ -38,9 +41,14 @@ const Header: FC<IHeaderProps> = ({ collapsed, setCollapsed }) => {
           type="text"
           icon={sliderIcon}
           className="header__button_slider"
-          onClick={handleShowMenu}
+          onClick={() => setCollapsed(!collapsed)}
         />
         <Logo className="header__logo" />
+        {user && (
+          <Button onClick={handleLogout} size="middle">
+            logout
+          </Button>
+        )}
       </div>
     </Layout.Header>
   );

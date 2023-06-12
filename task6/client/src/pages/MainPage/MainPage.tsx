@@ -1,5 +1,5 @@
 import React from 'react';
-import MessageForm from '../../components/form/MessageForm/MessageForm';
+import MessageForm from '../../components/MessageForm/MessageForm';
 import { Typography } from 'antd';
 import './MainPage.css';
 

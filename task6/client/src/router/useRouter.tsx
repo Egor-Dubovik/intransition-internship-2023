@@ -8,14 +8,19 @@ import { ROUTES } from './routes.enum';
 import Root from './Root';
 import MessengerPage from '../pages/MessengerPage/MessengerPage';
 import Chat from '../pages/Chat/Chat';
+import { useAppSelector } from '../app/store/hooks';
+import { selectUser } from '../features/LoginForm/userSlice';
 
 const useRouter = () => {
+  const user = useAppSelector(selectUser);
+  console.log(user.data);
+
   const routes = createRoutesFromElements(
     <Route path={ROUTES.ROOT} element={<Root />}>
-      <Route element={<ProtectedRoute redirectPath={ROUTES.LOGIN} condition={!true} />}>
+      <Route element={<ProtectedRoute redirectPath={ROUTES.LOGIN} condition={!user.data} />}>
         <Route path={ROUTES.MAIN} element={<MainPage />} />
       </Route>
-      <Route element={<ProtectedRoute redirectPath={ROUTES.MAIN} condition={!!false} />}>
+      <Route element={<ProtectedRoute redirectPath={ROUTES.MAIN} condition={!!user.data} />}>
         <Route path={ROUTES.LOGIN} element={<LoginPage />} />
       </Route>
       <Route path={ROUTES.MESSANGER} element={<MessengerPage />} />
