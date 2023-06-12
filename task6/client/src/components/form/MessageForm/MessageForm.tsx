@@ -3,6 +3,7 @@ import { Button, Form, Input, Select } from 'antd';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IMessageProps } from '../../../common/types/message';
 import TextArea from 'antd/es/input/TextArea';
+import { BASE_URL } from '../../../common/constant/api';
 
 const MessageForm: FC = () => {
   const { handleSubmit, setValue } = useForm<IMessageProps>();
@@ -15,6 +16,16 @@ const MessageForm: FC = () => {
 
   const onSubmit: SubmitHandler<IMessageProps> = (data) => {
     console.log(data);
+    const socket = new WebSocket(`ws://localhost:10000`);
+
+    socket.onopen = () => {
+      console.log('client connect');
+      socket.send('hello from client');
+    };
+
+    socket.onmessage = (event) => {
+      console.log(event.data);
+    };
   };
 
   return (
