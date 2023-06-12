@@ -1,19 +1,17 @@
 import React, { FC, useEffect } from 'react';
 import { RouterProvider } from 'react-router-dom';
-import useRouter from '../router/useRouter';
-import { io } from 'socket.io-client';
-import { BASE_URL } from '../common/constant/api';
 import { useLoginMutation } from '../features/LoginForm/loginAPI';
-import Loader from '../components/Loader/Loader';
 import { useLogin } from '../hooks/useLogin';
+import { useAppDispatch } from './store/hooks';
+import { connectToSocket } from '../socketio/socketSlice';
+import useRouter from '../router/useRouter';
+import Loader from '../components/Loader/Loader';
 import './App.css';
 
-const socket = io(BASE_URL);
-socket.connect();
-
 const App: FC = () => {
-  const router = useRouter();
   const [login, { data, isLoading, isSuccess }] = useLoginMutation();
+  const dispatch = useAppDispatch();
+  const router = useRouter();
 
   useLogin(isSuccess, data);
   useEffect(() => {
@@ -24,6 +22,7 @@ const App: FC = () => {
       return;
     }
     localStorage.removeItem('user');
+    dispatch(connectToSocket());
   }, []);
 
   return <div className="App">{!isLoading ? <RouterProvider router={router} /> : <Loader />}</div>;
