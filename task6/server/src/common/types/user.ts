@@ -3,6 +3,6 @@ export interface ILoginProps {
 }
 
 export interface IUser {
-  id: number;
+  id?: number;
   nickName: string;
 }

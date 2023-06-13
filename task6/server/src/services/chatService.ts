@@ -3,36 +3,25 @@ import { IMessageProps } from "../common/types/messanger";
 import { IUser } from "../common/types/user";
 import { io, userStore } from "../index";
 import { Chat } from "../models/Chat";
+import { syncModels } from "../models/index";
 import Message from "../models/Message";
 import User from "../models/User";
+import socketService from "./socketService";
+import userService from "./userService";
 
 class ChatService {
   async create(data: IMessageProps) {
     try {
       const { to, topic, text, from } = data;
-      const chat = await Chat.create({ topic });
-      const ChatId = chat.getDataValue("id");
+      const senderId = (await userService.findByNickName(from))?.getDataValue("id");
+      const recipients = await userService.findOrCreate(to);
 
-      const users = await Promise.all(
-        to.map(async (recipient) => {
-          const [user] = await User.findOrCreate<Model<IUser>>({ where: { nickName: recipient } });
-          return user;
-        })
-      );
-
-      const messagePromises = await Promise.all(
-        users.map(async (user) => {
-          const UserId = user.getDataValue("id");
-          const message = await Message.create({ from, text, ChatId, UserId });
-          return message;
-        })
-      );
-
-      users.forEach((user) => {
-        const socketId = userStore[user.getDataValue("nickName")];
-        if (socketId) {
-          io.to(socketId).emit("notification", { ...data, ChatId });
-        }
+      recipients.forEach(async (recipient) => {
+        const recipientId = recipient.getDataValue("id");
+        const chat = await Chat.create({ members: JSON.stringify([recipientId, senderId]), topic });
+        const chatId = chat.getDataValue("id");
+        await Message.create({ from, text, chatId, userId: recipientId });
+        socketService.sendNotification(recipient, { ...data, chatId });
       });
     } catch (error) {
       console.log(error);

@@ -1,20 +1,13 @@
-import { Server } from "socket.io";
-import { IMessageProps } from "../common/types/messanger";
+import { Model } from "sequelize";
 import { IUser } from "../common/types/user";
-import { IUserStore } from "../index";
-import { Chat } from "../models/Chat";
-import Message from "../models/Message";
-import User from "../models/User";
+import { io, userStore } from "../index";
+import { IMessage } from "../models/Message";
 
-class socketService {
-  sendNotification(names: string[], users: IUserStore, io: Server) {
-    names.forEach((name) => {
-      const socketId = users[name];
-      if (socketId) {
-        io.to(socketId).emit("notification", data);
-      }
-    });
+class SocketService {
+  sendNotification(recipient: Model<IUser>, messag: IMessage) {
+    const socketId = userStore[recipient.getDataValue("nickName")];
+    if (socketId) io.to(socketId).emit("notification", messag);
   }
 }
 
-export default new socketService();
+export default new SocketService();
