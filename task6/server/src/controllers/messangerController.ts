@@ -14,6 +14,17 @@ class MessangerController {
       next(err);
     }
   }
+
+  async getChatMessages(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { chatid } = req.body;
+      if (!chatid) return next(ApiError.badRequest(messages.invalidProps));
+      const chatMessages = await messangerService.getMessages(chatid);
+      return res.json(chatMessages);
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 export default new MessangerController();

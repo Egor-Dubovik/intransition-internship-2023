@@ -1,5 +1,6 @@
 import { Op } from "sequelize";
 import { Chat } from "../models/Chat";
+import Message from "../models/Message";
 
 class MessangerService {
   async getChats(userId: number) {
@@ -9,6 +10,11 @@ class MessangerService {
       },
     });
     return chats;
+  }
+
+  async getMessages(chatid: number) {
+    const messages = await Message.findAll({ where: { chatid } });
+    return messages;
   }
 }
 
