@@ -1,5 +1,8 @@
 export enum Models {
-  User = "users",
+  User = "user",
+  Chat = "chat",
+  Message = "message",
+  UserChat = "userChat",
 }
 
 export enum StringLength {
