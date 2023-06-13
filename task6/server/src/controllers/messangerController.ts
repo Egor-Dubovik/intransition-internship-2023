@@ -6,9 +6,9 @@ import { messages } from "../common/constant/messages";
 class MessangerController {
   async getAllChats(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id, limit, offset } = req.body;
-      if (!id) return next(ApiError.badRequest(messages.invalidProps));
-      const chats = await messangerService.getChats(id, limit, offset);
+      const { id, limit, offset } = req.query;
+      if (!id || !limit || !offset) return next(ApiError.badRequest(messages.invalidProps));
+      const chats = await messangerService.getChats(+id, +limit, +offset);
       return res.json(chats);
     } catch (err) {
       next(err);
@@ -17,9 +17,9 @@ class MessangerController {
 
   async getChatMessages(req: Request, res: Response, next: NextFunction) {
     try {
-      const { chatid, limit, offset } = req.body;
-      if (!chatid) return next(ApiError.badRequest(messages.invalidProps));
-      const chatMessages = await messangerService.getMessages(chatid, limit, offset);
+      const { chatid, limit, offset } = req.query;
+      if (!chatid || !limit || !offset) return next(ApiError.badRequest(messages.invalidProps));
+      const chatMessages = await messangerService.getMessages(+chatid, +limit, +offset);
       return res.json(chatMessages);
     } catch (err) {
       next(err);
