@@ -7,6 +7,17 @@ import { useAppSelector } from '../../app/store/hooks';
 import { selectUser } from '../../features/LoginForm/userSlice';
 import SocketIO from '../../socketio/SocketIO';
 
+const options = [
+  {
+    value: 'lera',
+    label: 'Lera',
+  },
+  {
+    value: 'ego',
+    label: 'eGo',
+  },
+];
+
 const MessageForm: FC = () => {
   const { handleSubmit, setValue } = useForm<IMessageProps>();
   const user = useAppSelector(selectUser);
@@ -29,18 +40,12 @@ const MessageForm: FC = () => {
       <Form.Item name="" rules={[{ required: true, message: 'Enter recipient' }]}>
         <Select
           mode="tags"
-          allowClear
           size="large"
-          placeholder="Select or enter recipient"
+          placeholder="select recipient"
           onChange={changeRecipient}
-        >
-          <Select.Option key="aaa" value="aaa">
-            AAA
-          </Select.Option>
-          <Select.Option key="bbb" value="bbb">
-            BBB
-          </Select.Option>
-        </Select>
+          style={{ width: '100%' }}
+          options={options}
+        />
       </Form.Item>
 
       <Form.Item name="recipient" rules={[{ required: true, message: 'Enter topic' }]}>
