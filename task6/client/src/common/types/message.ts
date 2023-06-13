@@ -1,5 +1,6 @@
 export interface IMessageProps {
-  recipient: string[];
-  subject: string;
+  to: string[];
+  from: string;
+  topic: string;
   text: string;
 }

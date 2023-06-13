@@ -1,32 +1,36 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Button, Form, Input, Select } from 'antd';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IMessageProps } from '../../common/types/message';
 import TextArea from 'antd/es/input/TextArea';
-import { BASE_URL } from '../../common/constant/api';
+import { useAppSelector } from '../../app/store/hooks';
+import { selectUser } from '../../features/LoginForm/userSlice';
+import SocketIO from '../../socketio/SocketIO';
 
 const MessageForm: FC = () => {
   const { handleSubmit, setValue } = useForm<IMessageProps>();
+  const user = useAppSelector(selectUser);
 
-  const changeRecipient = (value: string[]): void => setValue('recipient', value);
+  const changeRecipient = (value: string[]): void => setValue('to', value);
   const changeSubject = (event: React.ChangeEvent<HTMLInputElement>): void =>
-    setValue('subject', event.target.value);
+    setValue('topic', event.target.value);
   const changeText = (event: React.ChangeEvent<HTMLTextAreaElement>): void =>
     setValue('text', event.target.value);
 
   const onSubmit: SubmitHandler<IMessageProps> = (data) => {
     console.log(data);
-    const socket = new WebSocket(`ws://localhost:10000`);
 
-    socket.onopen = () => {
-      console.log('client connect');
-      socket.send('hello from client');
-    };
-
-    socket.onmessage = (event) => {
-      console.log(event.data);
-    };
+    SocketIO.value?.emit('newChat', {
+      ...data,
+      from: user.data?.nickName,
+    });
   };
+
+  useEffect(() => {
+    SocketIO.value?.on('notification', (data) => {
+      console.log(`Lera:`, data);
+    });
+  }, []);
 
   return (
     <Form className="form" onFinish={handleSubmit(onSubmit)}>
@@ -47,8 +51,8 @@ const MessageForm: FC = () => {
         </Select>
       </Form.Item>
 
-      <Form.Item name="recipient" rules={[{ required: true, message: 'Enter recipient' }]}>
-        <Input type="text" size="large" placeholder="Enter subject" onChange={changeSubject} />
+      <Form.Item name="recipient" rules={[{ required: true, message: 'Enter topic' }]}>
+        <Input type="text" size="large" placeholder="Enter topic" onChange={changeSubject} />
       </Form.Item>
 
       <Form.Item name="text" rules={[{ required: true, message: 'Enter text' }]}>

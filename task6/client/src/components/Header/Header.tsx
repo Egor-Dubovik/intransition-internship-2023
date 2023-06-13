@@ -4,6 +4,7 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '../../app/store/hooks';
 import { setIsVisible } from '../../features/SliderMenu/sliderMenuSlice';
 import { selectUser, setUserData } from '../../features/LoginForm/userSlice';
+import SocketIO from '../../socketio/SocketIO';
 import Logo from '../logos/Logo/Logo';
 import './Header.css';
 
@@ -28,6 +29,7 @@ const Header: FC<IHeaderProps> = ({ collapsed, setCollapsed }) => {
   const handleLogout = () => {
     dispatch(setUserData(null));
     localStorage.removeItem('user');
+    SocketIO.value?.close();
   };
 
   useEffect(() => {

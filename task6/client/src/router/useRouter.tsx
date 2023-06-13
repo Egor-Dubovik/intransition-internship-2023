@@ -13,8 +13,6 @@ import { selectUser } from '../features/LoginForm/userSlice';
 
 const useRouter = () => {
   const user = useAppSelector(selectUser);
-  console.log(user.data);
-
   const routes = createRoutesFromElements(
     <Route path={ROUTES.ROOT} element={<Root />}>
       <Route element={<ProtectedRoute redirectPath={ROUTES.LOGIN} condition={!user.data} />}>
