@@ -46,7 +46,7 @@ const Header: FC<IHeaderProps> = ({ collapsed, setCollapsed }) => {
           onClick={() => setCollapsed(!collapsed)}
         />
         <Logo className="header__logo" />
-        {user && (
+        {user.data && (
           <Button onClick={handleLogout} size="middle">
             logout
           </Button>

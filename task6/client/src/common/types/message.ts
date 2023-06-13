@@ -3,4 +3,5 @@ export interface IMessageProps {
   from: string;
   topic: string;
   text: string;
+  chatId?: number;
 }

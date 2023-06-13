@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { Button, Form, Input, Select } from 'antd';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IMessageProps } from '../../common/types/message';
@@ -18,19 +18,11 @@ const MessageForm: FC = () => {
     setValue('text', event.target.value);
 
   const onSubmit: SubmitHandler<IMessageProps> = (data) => {
-    console.log(data);
-
     SocketIO.value?.emit('newChat', {
       ...data,
       from: user.data?.nickName,
     });
   };
-
-  useEffect(() => {
-    SocketIO.value?.on('notification', (data) => {
-      console.log(`Lera:`, data);
-    });
-  }, []);
 
   return (
     <Form className="form" onFinish={handleSubmit(onSubmit)}>

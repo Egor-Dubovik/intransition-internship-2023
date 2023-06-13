@@ -4,24 +4,37 @@ import { useLoginMutation } from '../features/LoginForm/loginAPI';
 import { useLogin } from '../hooks/useLogin';
 import useRouter from '../router/useRouter';
 import Loader from '../components/Loader/Loader';
+import SocketIO from '../socketio/SocketIO';
+import { notification } from 'antd';
+import { IMessageProps } from '../common/types/message';
+import openNotification from '../helpers/openNotification';
 import './App.css';
 
 const App: FC = () => {
   const [login, { data, isLoading, isSuccess }] = useLoginMutation();
+  const [api, notificationElement] = notification.useNotification();
   const router = useRouter();
 
   useLogin(isSuccess, data);
   useEffect(() => {
     const user = localStorage.getItem('user');
-    if (user) {
-      const userData = JSON.parse(user);
-      login(userData);
-      return;
-    }
-    localStorage.removeItem('user');
+    user ? login(JSON.parse(user)) : localStorage.removeItem('user');
   }, []);
 
-  return <div className="App">{!isLoading ? <RouterProvider router={router} /> : <Loader />}</div>;
+  useEffect(() => {
+    SocketIO.value?.on('notification', (data: IMessageProps) => {
+      const { from, text } = data;
+      openNotification(api, from, text);
+      console.log(`new message`, data);
+    });
+  }, [SocketIO.value]);
+
+  return (
+    <div className="App">
+      {notificationElement}
+      {!isLoading ? <RouterProvider router={router} /> : <Loader />}
+    </div>
+  );
 };
 
 export default App;

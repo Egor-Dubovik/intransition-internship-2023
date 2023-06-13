@@ -17,12 +17,12 @@ const useRouter = () => {
     <Route path={ROUTES.ROOT} element={<Root />}>
       <Route element={<ProtectedRoute redirectPath={ROUTES.LOGIN} condition={!user.data} />}>
         <Route path={ROUTES.MAIN} element={<MainPage />} />
+        <Route path={ROUTES.MESSANGER} element={<MessengerPage />} />
+        <Route path={ROUTES.CHAT + '/:id'} element={<Chat />} />
       </Route>
       <Route element={<ProtectedRoute redirectPath={ROUTES.MAIN} condition={!!user.data} />}>
         <Route path={ROUTES.LOGIN} element={<LoginPage />} />
       </Route>
-      <Route path={ROUTES.MESSANGER} element={<MessengerPage />} />
-      <Route path={ROUTES.CHAT + '/:id'} element={<Chat />} />
       <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage />} />
       <Route path={ROUTES.BAD} element={<Navigate to={ROUTES.NOT_FOUND} replace />} />
     </Route>
