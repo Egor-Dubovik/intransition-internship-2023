@@ -1,22 +1,34 @@
-import { IMessageProps } from "../common/types/messanger";
+import { IChatMessage, INewChatMessageProps } from "../common/types/message";
 import { Chat } from "../models/Chat";
 import messageService from "./messageService";
 import socketService from "./socketService";
 import userService from "./userService";
 
 class ChatService {
-  async create(data: IMessageProps) {
+  async create(data: INewChatMessageProps) {
     try {
       const { to, topic, text, from } = data;
       const senderId = (await userService.findByNickName(from))?.getDataValue("id");
       const recipients = await userService.findOrCreate(to);
       recipients.forEach(async (recipient) => {
-        const recipientId = recipient.getDataValue("id") as number;
-        const chat = await Chat.create({ members: JSON.stringify([recipientId, senderId]), topic });
+        const userId = recipient.getDataValue("id") as number;
+        const userNick = recipient.getDataValue("nickName");
+        const chat = await Chat.create({ members: JSON.stringify([userId, senderId]), topic });
         const chatId = chat.getDataValue("id") as number;
-        await messageService.create({ from, text, chatId, userId: recipientId });
-        socketService.sendNotification(recipient, { ...data, chatId });
+        await messageService.create({ from, text, chatId, userId });
+        socketService.sendNotification({ to: userNick, text, from, chatId, userId });
       });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async sendMessage(data: IChatMessage) {
+    try {
+      const { text, from, userId, chatId } = data;
+
+      await messageService.create({ from, text, userId, chatId });
+      socketService.sendNotification(data);
     } catch (error) {
       console.log(error);
     }

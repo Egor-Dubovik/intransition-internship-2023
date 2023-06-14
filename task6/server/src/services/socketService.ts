@@ -1,12 +1,15 @@
-import { Model } from "sequelize";
-import { IMessageNotification } from "../common/types/message";
-import { IUser } from "../common/types/user";
+import { IChatMessage } from "../common/types/message";
 import { io, userStore } from "../index";
 
 class SocketService {
-  sendNotification(recipient: Model<IUser>, messag: IMessageNotification) {
-    const socketId = userStore[recipient.getDataValue("nickName")];
-    if (socketId) io.to(socketId).emit("notification", messag);
+  sendNotification(message: IChatMessage) {
+    const socketId = userStore[message.to];
+    if (socketId) io.to(socketId).emit("notification", message);
+  }
+
+  sendMessage(message: IChatMessage) {
+    const socketId = userStore[message.to];
+    if (socketId) io.to(socketId).emit("newMessage", message);
   }
 }
 

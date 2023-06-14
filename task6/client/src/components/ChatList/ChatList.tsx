@@ -1,13 +1,14 @@
 import React, { FC, useEffect, useState, useRef } from 'react';
-import { Divider, List } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import VirtualList from 'rc-virtual-list';
-import './ChatList.css';
 import { IChat } from '../../common/types/messagner';
 import { useAppSelector } from '../../app/store/hooks';
 import { selectUser } from '../../features/LoginForm/userSlice';
 import { useGetChatsQuery } from './chatAPI';
 import Loader from '../Loader/Loader';
+import ListItem from '../ListItem/ListItem';
+import { List } from 'antd';
+import './ChatList.css';
 
 const ChatList: FC = () => {
   const [chats, setChats] = useState<IChat[]>([]);
@@ -35,7 +36,7 @@ const ChatList: FC = () => {
   }, [data]);
 
   return (
-    <div ref={containerRef} style={{ height: '95%', overflow: 'auto' }}>
+    <div ref={containerRef} className="chat-list">
       <>
         {!isLoading ? (
           <>
@@ -48,12 +49,8 @@ const ChatList: FC = () => {
                 onScroll={onScroll}
               >
                 {(chat: IChat) => (
-                  <List.Item key={chat.id}>
-                    <List.Item.Meta
-                      title={<a href="https://ant.design">{chat.topic}</a>}
-                      description={chat.id}
-                    />
-                    <div>Content</div>
+                  <List.Item key={chat.id} className="chat-list__item">
+                    <ListItem chat={chat} />
                   </List.Item>
                 )}
               </VirtualList>

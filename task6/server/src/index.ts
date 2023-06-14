@@ -7,8 +7,8 @@ import router from "./routes/index";
 import { syncModels } from "./models/index";
 import { errorMiddleware } from "./midleware/errorMiddleware";
 import { Server } from "socket.io";
-import { IMessageProps } from "./common/types/messanger";
 import chatService from "./services/chatService";
+import { IChatMessage, INewChatMessageProps } from "./common/types/message";
 
 dotenv.config();
 const corsOptions = {
@@ -40,9 +40,12 @@ io.on("connection", (socket) => {
   userStore[nickName as string] = socket.id;
   console.log(`user ${nickName} with id ${socket.id} connected`);
 
-  socket.on("newChat", async (data: IMessageProps) => {
+  socket.on("newChat", async (data: INewChatMessageProps) => {
     await chatService.create(data);
-    // io.to(users[data.to[0]]).emit("notification", data);
+  });
+
+  socket.on("newMessage", async (data: IChatMessage) => {
+    await chatService.sendMessage(data);
   });
 
   socket.on("disconnect", () => {

@@ -1,6 +1,18 @@
 .chat-list {
-  height: 400;
+  height: 95%;
   overflow: auto;
-  padding: 0 16px;
-  border: 1px solid rgba(140, 140, 140, 0.35);
+}
+
+:where(.css-dev-only-do-not-override-12jzuas).ant-list .ant-list-item {
+  padding: 0;
+}
+
+.chat-list__item {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.chat-list__item:hover {
+  border-bottom: 1px solid rgba(201, 201, 201, 0.9);
+  background-color: rgba(214, 214, 214, 0.3);
 }

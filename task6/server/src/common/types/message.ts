@@ -1,12 +1,18 @@
-import { IMessageProps } from "./messanger";
+interface IMainMessageProps {
+  from: string;
+  text: string;
+}
 
-export interface IMessageNotification extends IMessageProps {
+export interface INewChatMessageProps extends IMainMessageProps {
+  to: string[];
+  topic: string;
+}
+
+export interface IMessage extends IMainMessageProps {
+  userId: number;
   chatId: number;
 }
 
-export interface IMessage {
-  from: string;
-  text: string;
-  userId: number;
-  chatId: number;
+export interface IChatMessage extends IMessage {
+  to: string;
 }
