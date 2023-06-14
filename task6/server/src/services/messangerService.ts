@@ -9,12 +9,14 @@ class MessangerService {
       limit,
       offset,
     });
-    return chats;
+    const hasMoreChats = chats.length === limit;
+    return { chats, hasMoreChats };
   }
 
   async getMessages(chatid: number, limit: number, offset: number) {
     const messages = await Message.findAll({ where: { chatid }, limit, offset });
-    return messages;
+    const hasMoreMessages = messages.length === limit;
+    return { messages, hasMoreMessages };
   }
 }
 
