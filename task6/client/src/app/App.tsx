@@ -6,7 +6,7 @@ import useRouter from '../router/useRouter';
 import Loader from '../components/Loader/Loader';
 import SocketIO from '../socketio/SocketIO';
 import { notification } from 'antd';
-import { IMessageProps } from '../common/types/message';
+import { IMessageProps } from '../common/types/messagner';
 import openNotification from '../helpers/openNotification';
 import './App.css';
 

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Button, Form, Input, Select } from 'antd';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { IMessageProps } from '../../common/types/message';
+import { IMessageProps } from '../../common/types/messagner';
 import TextArea from 'antd/es/input/TextArea';
 import { useAppSelector } from '../../app/store/hooks';
 import { selectUser } from '../../features/LoginForm/userSlice';
