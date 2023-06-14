@@ -1,0 +1,13 @@
+.writer-tools {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.button svg {
+  width: 32px;
+  height: 32px;
+  padding: 5px;
+  color: #529ef4;
+  cursor: pointer;
+}

@@ -6,10 +6,25 @@ export interface IMessageProps {
   chatId?: number;
 }
 
-export interface IReqChatsProps {
+export interface IMessage {
   id: number;
+  from: string;
+  text: string;
+  userId: number;
+  chatId: number;
+}
+
+interface ILimitation {
   limit: number;
   offset: number;
+}
+
+export interface IReqChatsProps extends ILimitation {
+  id: number;
+}
+
+export interface IReqMessageProps extends ILimitation {
+  chatid: number;
 }
 
 export interface IChat {
@@ -23,5 +38,10 @@ export interface IChat {
 
 export interface IChatResInfo {
   chats: IChat[];
+  hasMoreChats: boolean;
+}
+
+export interface IMessaaageResInfo {
+  messages: IMessage[];
   hasMoreChats: boolean;
 }

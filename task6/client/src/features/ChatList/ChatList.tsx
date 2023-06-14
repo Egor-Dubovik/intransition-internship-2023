@@ -3,10 +3,10 @@ import { DeleteOutlined } from '@ant-design/icons';
 import VirtualList from 'rc-virtual-list';
 import { IChat } from '../../common/types/messagner';
 import { useAppSelector } from '../../app/store/hooks';
-import { selectUser } from '../../features/LoginForm/userSlice';
+import { selectUser } from '../LoginForm/userSlice';
 import { useGetChatsQuery } from './chatAPI';
-import Loader from '../Loader/Loader';
-import ListItem from '../ListItem/ListItem';
+import Loader from '../../components/Loader/Loader';
+import ListItem from '../../components/ListItem/ListItem';
 import { List } from 'antd';
 import './ChatList.css';
 
