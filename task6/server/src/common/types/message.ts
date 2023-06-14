@@ -9,6 +9,7 @@ export interface INewChatMessageProps extends IMainMessageProps {
 }
 
 export interface IMessage extends IMainMessageProps {
+  id?: number;
   userId: number;
   chatId: number;
 }

@@ -26,9 +26,11 @@ class ChatService {
   async sendMessage(data: IChatMessage) {
     try {
       const { text, from, userId, chatId } = data;
-
-      await messageService.create({ from, text, userId, chatId });
-      socketService.sendNotification(data);
+      const userNick = (await userService.findById(userId))?.getDataValue("nickName") as string;
+      const newMessage = await messageService.create({ from, text, userId, chatId });
+      socketService.sendNotification({ ...data, to: userNick });
+      socketService.sendMessage(newMessage, userNick);
+      socketService.sendMessage(newMessage, from);
     } catch (error) {
       console.log(error);
     }

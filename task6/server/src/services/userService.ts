@@ -24,6 +24,11 @@ class UserService {
     const user = await User.findOne<Model<IUser>>({ where: { nickName } });
     return user;
   }
+
+  async findById(id: number) {
+    const user = await User.findOne<Model<IUser>>({ where: { id } });
+    return user;
+  }
 }
 
 export default new UserService();
