@@ -7,7 +7,8 @@ export interface IMessageProps {
 }
 
 export interface IMessage {
-  id: number;
+  id?: number;
+  to?: string;
   from: string;
   text: string;
   userId: number;

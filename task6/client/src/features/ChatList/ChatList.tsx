@@ -28,11 +28,7 @@ const ChatList: FC = () => {
   };
 
   useEffect(() => {
-    if (data) {
-      setChats([...chats, ...data.chats]);
-    }
-    console.log(chats);
-    console.log(chats.length);
+    if (data) setChats([...chats, ...data.chats]);
   }, [data]);
 
   return (
