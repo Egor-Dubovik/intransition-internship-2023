@@ -3,7 +3,7 @@ import TextArea from 'antd/es/input/TextArea';
 import { SendOutlined } from '@ant-design/icons';
 import SocketIO from '../../socketio/SocketIO';
 import { useAppSelector } from '../../app/store/hooks';
-import { selectChat } from '../../pages/Chat/chatSlice';
+import { selectChat } from '../../features/Chat/chatSlice';
 import { selectUser } from '../../features/LoginForm/userSlice';
 import './WriterTools.css';
 

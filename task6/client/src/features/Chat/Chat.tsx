@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import WriterTools from '../../components/WriterTools/WriterTools';
-import MessageList from '../../features/MessageList/MessageList';
+import MessageList from '../MessageList/MessageList';
 import './Chat.css';
 
 const Chat: FC = () => {

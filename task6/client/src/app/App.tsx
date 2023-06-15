@@ -9,7 +9,7 @@ import { notification } from 'antd';
 import { IMessageProps } from '../common/types/messagner';
 import openNotification from '../helpers/openNotification';
 import { useAppSelector } from './store/hooks';
-import { selectChat } from '../pages/Chat/chatSlice';
+import { selectChat } from '../features/Chat/chatSlice';
 import './App.css';
 
 const App: FC = () => {

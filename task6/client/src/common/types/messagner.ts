@@ -18,6 +18,7 @@ export interface IMessage {
 interface ILimitation {
   limit: number;
   offset: number;
+  topic: string;
 }
 
 export interface IReqChatsProps extends ILimitation {

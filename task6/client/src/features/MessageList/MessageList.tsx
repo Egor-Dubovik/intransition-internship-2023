@@ -5,7 +5,7 @@ import { useGetMessagesQuery } from './messageAPI';
 import Loader from '../../components/Loader/Loader';
 import SocketIO from '../../socketio/SocketIO';
 import { useAppDispatch, useAppSelector } from '../../app/store/hooks';
-import { selectChat, setOpenChat } from '../../pages/Chat/chatSlice';
+import { selectChat, setOpenChat } from '../Chat/chatSlice';
 
 const MessageList: FC = () => {
   const [messages, setMessages] = useState<IMessage[]>([]);

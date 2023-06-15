@@ -4,7 +4,7 @@ import { userAPI } from '../../features/LoginForm/userAPI';
 import { userReducer } from '../../features/LoginForm/userSlice';
 import { messageAPI } from '../../features/MessageList/messageAPI';
 import { sliderMenuReducer } from '../../features/SliderMenu/sliderMenuSlice';
-import { chatReducer } from '../../pages/Chat/chatSlice';
+import { chatReducer } from '../../features/Chat/chatSlice';
 
 export const store = configureStore({
   reducer: {
@@ -13,7 +13,7 @@ export const store = configureStore({
     [userAPI.reducerPath]: userAPI.reducer,
     [chatAPI.reducerPath]: chatAPI.reducer,
     [messageAPI.reducerPath]: messageAPI.reducer,
-    activeChat: chatReducer,
+    chat: chatReducer,
   },
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware()

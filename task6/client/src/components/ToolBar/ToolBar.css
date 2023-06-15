@@ -1,0 +1,23 @@
+.tool-bar {
+  padding: 16px 8px;
+  display: flex;
+  column-gap: 15px;
+}
+
+.tool-bar__input {
+  max-width: 500px;
+}
+
+.tool-bar__button {
+  flex: 0 0 35px;
+  height: 35px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+  transition: all 0.2s ease-out;
+}
+
+.tool-bar__button._delete:hover {
+  color: rgb(250, 29, 29);
+  background-color: rgba(255, 0, 0, 0.2);
+  transition: all 0.3s ease-in;
+}

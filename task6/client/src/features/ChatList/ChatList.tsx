@@ -1,13 +1,14 @@
 import React, { FC, useEffect, useState, useRef } from 'react';
-import { DeleteOutlined } from '@ant-design/icons';
 import VirtualList from 'rc-virtual-list';
 import { IChat } from '../../common/types/messagner';
-import { useAppSelector } from '../../app/store/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/store/hooks';
 import { selectUser } from '../LoginForm/userSlice';
 import { useGetChatsQuery } from './chatAPI';
 import Loader from '../../components/Loader/Loader';
 import ListItem from '../../components/ListItem/ListItem';
 import { List } from 'antd';
+import { CHAT } from '../../common/constant/chat';
+import { selectIsDeleted, setIsDelete } from '../Chat/chatSlice';
 import './ChatList.css';
 
 const ChatList: FC = () => {
@@ -15,26 +16,40 @@ const ChatList: FC = () => {
   const [offset, setOffset] = useState<number>(0);
   const user = useAppSelector(selectUser);
   const containerRef = useRef<HTMLDivElement>(null);
-  const { data, isLoading } = useGetChatsQuery({
-    id: user.data?.id as number,
-    limit: 10,
-    offset,
-  });
+  const isDeleted = useAppSelector(selectIsDeleted);
+  const dispatch = useAppDispatch();
+  const { data, isLoading, refetch } = useGetChatsQuery(
+    {
+      id: user.data?.id as number,
+      limit: CHAT.LIMIT,
+      offset,
+      topic: '',
+    },
+    { refetchOnMountOrArgChange: true }
+  );
 
   const onScroll = (event: React.UIEvent<HTMLElement, UIEvent>): void => {
     const target = event.currentTarget;
     const scrolledToBottom = target.scrollHeight - target.scrollTop <= target.clientHeight + 1;
-    if (scrolledToBottom && data?.hasMoreChats) setOffset(offset + 10);
+    if (scrolledToBottom && data?.hasMoreChats) setOffset(offset + CHAT.LIMIT);
   };
 
   useEffect(() => {
     if (data) setChats([...chats, ...data.chats]);
   }, [data]);
 
+  useEffect(() => {
+    if (isDeleted) {
+      setChats([]);
+      refetch();
+      dispatch(setIsDelete(false));
+    }
+  }, [isDeleted]);
+
   return (
     <div ref={containerRef} className="chat-list">
       <>
-        {!isLoading ? (
+        {!isLoading || !isDeleted ? (
           <>
             <List>
               <VirtualList

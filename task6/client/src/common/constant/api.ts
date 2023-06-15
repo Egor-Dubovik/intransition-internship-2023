@@ -7,5 +7,7 @@ export const API = {
   usersById: '/user/allById',
   login: '/user/login',
   chats: '/messanger/chats',
+  chat: '/messanger/chat',
   messages: '/messanger/messages',
+  lastMessage: '/messanger/lastMessage',
 };

@@ -7,7 +7,7 @@ import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
 import { ROUTES } from './routes.enum';
 import Root from './Root';
 import MessengerPage from '../pages/MessengerPage/MessengerPage';
-import Chat from '../pages/Chat/Chat';
+import Chat from '../features/Chat/Chat';
 import { useAppSelector } from '../app/store/hooks';
 import { selectUser } from '../features/LoginForm/userSlice';
 

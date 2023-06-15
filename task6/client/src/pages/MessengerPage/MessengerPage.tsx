@@ -4,10 +4,10 @@ import ToolBar from '../../components/ToolBar/ToolBar';
 
 const MessengerPage = (): JSX.Element => {
   return (
-    <>
+    <section className="messanger">
       <ToolBar />
       <ChatList />
-    </>
+    </section>
   );
 };
 
