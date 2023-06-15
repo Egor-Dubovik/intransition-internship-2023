@@ -5,6 +5,7 @@ import sequelize from "../db";
 const User = sequelize.define(Models.User, {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   nickName: { type: DataTypes.STRING(StringLength.Medium), allowNull: false, unique: true },
+  isOnline: { type: DataTypes.BOOLEAN, defaultValue: false },
 });
 
 export default User;

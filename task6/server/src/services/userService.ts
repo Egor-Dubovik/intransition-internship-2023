@@ -29,6 +29,12 @@ class UserService {
     const user = await User.findOne<Model<IUser>>({ where: { id } });
     return user;
   }
+
+  async findAllById(usersId: number[]) {
+    const usersPromises = usersId.map(async (id) => await this.findById(id));
+    const users = await Promise.all(usersPromises);
+    return users;
+  }
 }
 
 export default new UserService();
