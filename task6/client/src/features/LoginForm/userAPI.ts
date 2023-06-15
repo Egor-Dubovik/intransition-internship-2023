@@ -3,7 +3,7 @@ import { API_URL, API } from '../../common/constant/api';
 import { IUser } from '../../common/types/user';
 import { ILoginProps } from '../../pages/LoginPage/types';
 
-export const loginAPI = createApi({
+export const userAPI = createApi({
   reducerPath: 'login',
   baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
   endpoints: (builder) => ({
@@ -15,7 +15,14 @@ export const loginAPI = createApi({
         body: data,
       }),
     }),
+
+    getUsersById: builder.query<IUser[], string>({
+      query: (usersId: string) => ({
+        url: `${API.usersById}?usersId=${usersId}`,
+        headers: { 'Content-Type': 'application/json' },
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation } = loginAPI;
+export const { useLoginMutation, useGetUsersByIdQuery } = userAPI;

@@ -14,13 +14,13 @@ const WriterTools: FC = () => {
 
   const handleSubmit = () => {
     const userId = (JSON.parse(members) as number[]).filter((id) => id !== user.data?.id)[0];
-    const newMessage = {
+    setMessageText('');
+    SocketIO.value?.emit('newMessage', {
       text: messageText,
       from: user.data?.nickName as string,
       chatId: id,
       userId,
-    };
-    SocketIO.value?.emit('newMessage', newMessage);
+    });
   };
 
   return (

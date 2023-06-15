@@ -12,11 +12,14 @@ const MessageList: FC = () => {
   const activeChat = useAppSelector(selectChat);
   const dispatch = useAppDispatch();
   const params = useParams();
-  const { data, isLoading } = useGetMessagesQuery({
-    chatid: Number(params.id),
-    limit: 100,
-    offset: 0,
-  });
+  const { data, isLoading } = useGetMessagesQuery(
+    {
+      chatid: Number(params.id),
+      limit: 100,
+      offset: 0,
+    },
+    { refetchOnMountOrArgChange: true }
+  );
 
   useEffect(() => {
     if (data) setMessages(data.messages);

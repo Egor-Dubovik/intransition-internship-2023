@@ -3,7 +3,7 @@ import { Button, Form, Input, Tooltip } from 'antd';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ILoginProps } from '../../pages/LoginPage/types';
 import { InfoCircleOutlined, UserOutlined } from '@ant-design/icons';
-import { useLoginMutation } from './loginAPI';
+import { useLoginMutation } from './userAPI';
 import Loader from '../../components/Loader/Loader';
 import { ERR_MESSAGE } from '../../common/constant/error';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
