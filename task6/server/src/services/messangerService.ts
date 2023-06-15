@@ -18,6 +18,14 @@ class MessangerService {
     const hasMoreMessages = messages.length === limit;
     return { messages, hasMoreMessages };
   }
+
+  async getLastMessage(chatid: number) {
+    const lastMessage = await Message.findOne({
+      where: { chatid },
+      order: [["createdAt", "DESC"]],
+    });
+    return lastMessage;
+  }
 }
 
 export default new MessangerService();

@@ -25,6 +25,17 @@ class MessangerController {
       next(err);
     }
   }
+
+  async getLastChatMessage(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { chatId } = req.query;
+      if (!chatId) return next(ApiError.badRequest(messages.invalidProps));
+      const lastMessage = await messangerService.getLastMessage(Number(chatId));
+      return res.json(lastMessage);
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 export default new MessangerController();
