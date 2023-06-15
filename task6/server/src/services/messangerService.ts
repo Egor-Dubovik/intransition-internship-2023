@@ -1,14 +1,12 @@
-import { Op } from "sequelize";
+import { Op, WhereOptions } from "sequelize";
 import { Chat } from "../models/Chat";
 import Message from "../models/Message";
 
 class MessangerService {
-  async getChats(userId: number, limit: number, offset: number) {
-    const chats = await Chat.findAll({
-      where: { members: { [Op.like]: `%${userId}%` } },
-      limit,
-      offset,
-    });
+  async getChats(userId: number, limit: number, offset: number, topic: string) {
+    const whereCondition: WhereOptions = { members: { [Op.like]: `%${userId}%` } };
+    if (topic !== "") whereCondition.topic = { [Op.like]: `%${topic}%` };
+    const chats = await Chat.findAll({ where: whereCondition, limit, offset });
     const hasMoreChats = chats.length === limit;
     return { chats, hasMoreChats };
   }
@@ -25,6 +23,11 @@ class MessangerService {
       order: [["createdAt", "DESC"]],
     });
     return lastMessage;
+  }
+
+  async deleteChat(id: number) {
+    const chat = await Chat.destroy({ where: { id } });
+    return chat;
   }
 }
 
