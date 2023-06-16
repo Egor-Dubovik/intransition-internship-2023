@@ -28,10 +28,7 @@ const ChatList: FC<IChatListProps> = ({ topic, chats, setChats }) => {
   }, [topic]);
 
   useEffect(() => {
-    if (data?.chats) {
-      setChats(data.chats);
-    }
-    console.log(data);
+    if (data?.chats) setChats(data.chats);
   }, [data]);
 
   return (

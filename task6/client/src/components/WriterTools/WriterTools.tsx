@@ -12,8 +12,13 @@ const WriterTools: FC = () => {
   const { members, id } = useAppSelector(selectChat);
   const user = useAppSelector(selectUser);
 
+  const getUserId = (memberIDs: number[]) =>
+    memberIDs[0] !== memberIDs[1]
+      ? memberIDs.filter((id) => id !== user.data?.id)[0]
+      : memberIDs[0];
+
   const handleSubmit = () => {
-    const userId = (JSON.parse(members) as number[]).filter((id) => id !== user.data?.id)[0];
+    const userId = getUserId(JSON.parse(members) as number[]);
     setMessageText('');
     SocketIO.value?.emit('newMessage', {
       text: messageText,

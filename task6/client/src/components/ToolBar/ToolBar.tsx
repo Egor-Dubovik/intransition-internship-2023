@@ -1,4 +1,4 @@
-import React, { ChangeEvent, Dispatch, FC, useEffect } from 'react';
+import React, { ChangeEvent, Dispatch, FC } from 'react';
 import { DeleteOutlined, SearchOutlined } from '@ant-design/icons';
 import { Input } from 'antd';
 import { useAppSelector } from '../../app/store/hooks';
@@ -25,7 +25,6 @@ const ToolBar: FC<IToolBarProps> = ({ setTopic, setChats }) => {
   };
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>): void => {
-    console.log('handleSearch');
     if (debounceTimer) {
       clearTimeout(debounceTimer);
     }
@@ -39,7 +38,7 @@ const ToolBar: FC<IToolBarProps> = ({ setTopic, setChats }) => {
     <div className="messanger__tool-bar tool-bar">
       <Input
         className="tool-bar__input"
-        placeholder="search"
+        placeholder="search by topic"
         prefix={<SearchOutlined rev="icon" />}
         onChange={handleSearch}
       />

@@ -13,6 +13,8 @@ export interface IMessage {
   text: string;
   userId: number;
   chatId: number;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 interface ILimitation {
