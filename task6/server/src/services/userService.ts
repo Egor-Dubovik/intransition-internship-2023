@@ -35,6 +35,11 @@ class UserService {
     const users = await Promise.all(usersPromises);
     return users;
   }
+
+  async getAll() {
+    const users = await User.findAll();
+    return users;
+  }
 }
 
 export default new UserService();
