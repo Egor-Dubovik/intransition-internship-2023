@@ -31,32 +31,31 @@ const ChatList: FC<IChatListProps> = ({ topic, chats, setChats }) => {
     if (data?.chats) {
       setChats(data.chats);
     }
+    console.log(data);
   }, [data]);
 
   return (
     <div ref={containerRef} className="chat-list">
-      <>
-        {!isLoading ? (
-          <>
-            <List>
-              <VirtualList
-                data={chats}
-                height={containerRef.current?.clientHeight || 0}
-                itemHeight={47}
-                itemKey="id"
-              >
-                {(chat: IChat) => (
-                  <List.Item key={chat.id} className="chat-list__item">
-                    <ListItem chat={chat} />
-                  </List.Item>
-                )}
-              </VirtualList>
-            </List>
-          </>
-        ) : (
-          <Loader />
-        )}
-      </>
+      {!isLoading ? (
+        <>
+          <List>
+            <VirtualList
+              data={chats}
+              height={containerRef.current?.clientHeight || 0}
+              itemHeight={47}
+              itemKey="id"
+            >
+              {(chat: IChat) => (
+                <List.Item key={chat.id} className="chat-list__item">
+                  <ListItem chat={chat} />
+                </List.Item>
+              )}
+            </VirtualList>
+          </List>
+        </>
+      ) : (
+        <Loader />
+      )}
     </div>
   );
 };

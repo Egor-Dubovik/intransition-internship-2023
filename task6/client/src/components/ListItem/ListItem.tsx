@@ -42,12 +42,14 @@ const ListItem: FC<IListItemProps> = ({ chat }) => {
         </div>
         {!isMemLoading ? (
           <ul className="content__item">
-            {chatMembers?.map((member, index) => (
-              <li key={member.id}>
-                {user.data?.nickName === member.nickName ? 'me' : member.nickName}
-                {index !== chatMembers.length - 1 && ','}
-              </li>
-            ))}
+            {chatMembers
+              ?.filter((member, index, self) => self.findIndex((m) => m.id === member.id) === index)
+              .map((member, index) => (
+                <li key={member.id}>
+                  {user.data?.nickName === member.nickName ? 'me' : member.nickName}
+                  {index !== chatMembers.length - 1 && ','}
+                </li>
+              ))}
           </ul>
         ) : (
           <Skeleton.Input style={{ width: '90%', height: '20px', marginRight: '10px' }} active />
