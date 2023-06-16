@@ -12,6 +12,10 @@ class SocketService {
     const socketId = userStore[userNick];
     if (socketId) io.to(socketId).emit("newMessage", message);
   }
+  chatCreated(userNick: string) {
+    const socketId = userStore[userNick];
+    if (socketId) io.to(socketId).emit("chatCreated");
+  }
 }
 
 export default new SocketService();

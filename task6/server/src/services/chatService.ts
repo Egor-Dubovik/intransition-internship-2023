@@ -17,6 +17,7 @@ class ChatService {
         const chatId = chat.getDataValue("id") as number;
         await messageService.create({ from, text, chatId, userId });
         socketService.sendNotification({ to: userNick, text, from, chatId, userId });
+        socketService.chatCreated(from);
       });
     } catch (error) {
       console.log(error);
@@ -29,8 +30,12 @@ class ChatService {
       const userNick = (await userService.findById(userId))?.getDataValue("nickName") as string;
       const newMessage = await messageService.create({ from, text, userId, chatId });
       socketService.sendNotification({ ...data, to: userNick });
-      socketService.sendMessage(newMessage, userNick);
-      socketService.sendMessage(newMessage, from);
+      if (from !== userNick) {
+        socketService.sendMessage(newMessage, userNick);
+        socketService.sendMessage(newMessage, from);
+      } else {
+        socketService.sendMessage(newMessage, from);
+      }
     } catch (error) {
       console.log(error);
     }

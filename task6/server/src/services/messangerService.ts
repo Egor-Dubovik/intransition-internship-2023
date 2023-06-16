@@ -3,12 +3,11 @@ import { Chat } from "../models/Chat";
 import Message from "../models/Message";
 
 class MessangerService {
-  async getChats(userId: number, limit: number, offset: number, topic: string) {
+  async getChats(userId: number, topic: string) {
     const whereCondition: WhereOptions = { members: { [Op.like]: `%${userId}%` } };
     if (topic !== "") whereCondition.topic = { [Op.like]: `%${topic}%` };
-    const chats = await Chat.findAll({ where: whereCondition, limit, offset });
-    const hasMoreChats = chats.length === limit;
-    return { chats, hasMoreChats };
+    const chats = await Chat.findAll({ where: whereCondition, order: [["updatedAt", "DESC"]] });
+    return { chats };
   }
 
   async getMessages(chatid: number, limit: number, offset: number) {
