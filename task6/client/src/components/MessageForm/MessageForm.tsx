@@ -1,13 +1,13 @@
-import React, { FC, useEffect, useMemo, useState } from 'react';
-import { Button, Form, Input, Select } from 'antd';
+import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
+import { Button, Form, FormInstance, Input, Select } from 'antd';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IMessageProps } from '../../common/types/messagner';
 import TextArea from 'antd/es/input/TextArea';
-import { useAppSelector } from '../../app/store/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/store/hooks';
 import { selectUser } from '../../features/LoginForm/userSlice';
 import SocketIO from '../../socketio/SocketIO';
-import Loader from '../Loader/Loader';
 import { useGetAllUsersQuery } from '../../features/LoginForm/userAPI';
+import { selectIsCreated, setIsCreated } from '../../features/Chat/chatSlice';
 import './MessageForm.css';
 
 interface IOption {
@@ -17,9 +17,13 @@ interface IOption {
 
 const MessageForm: FC = () => {
   const { handleSubmit, setValue } = useForm<IMessageProps>();
-  const { data: users, isLoading } = useGetAllUsersQuery();
+  const [isLoading, setIsLoading] = useState(false);
+  const { data: users, isLoading: isUsersLoading } = useGetAllUsersQuery();
   const [options, setOptions] = useState<IOption[]>([]);
   const user = useAppSelector(selectUser);
+  const isChatCreated = useAppSelector(selectIsCreated);
+  const dispatch = useAppDispatch();
+  const formRef = useRef<FormInstance>(null);
 
   const changeRecipient = (value: string[]): void => setValue('to', value);
   const changeSubject = (event: React.ChangeEvent<HTMLInputElement>): void =>
@@ -28,11 +32,20 @@ const MessageForm: FC = () => {
     setValue('text', event.target.value);
 
   const onSubmit: SubmitHandler<IMessageProps> = (data) => {
+    setIsLoading(true);
     SocketIO.value?.emit('newChat', {
       ...data,
       from: user.data?.nickName,
     });
   };
+
+  useEffect(() => {
+    if (isChatCreated) {
+      dispatch(setIsCreated(false));
+      setIsLoading(false);
+      formRef.current?.resetFields();
+    }
+  }, [isChatCreated]);
 
   useMemo(() => {
     if (users) {
@@ -42,33 +55,31 @@ const MessageForm: FC = () => {
   }, [users]);
 
   return (
-    <>
-      <Form className="message-form" onFinish={handleSubmit(onSubmit)}>
-        <Form.Item name="" rules={[{ required: true, message: 'Enter recipient' }]}>
-          <Select
-            mode="tags"
-            size="large"
-            loading={isLoading}
-            placeholder="select recipient"
-            onChange={changeRecipient}
-            style={{ width: '100%' }}
-            options={options}
-          />
-        </Form.Item>
+    <Form className="message-form" onFinish={handleSubmit(onSubmit)} ref={formRef}>
+      <Form.Item name="" rules={[{ required: true, message: 'Enter recipient' }]}>
+        <Select
+          mode="tags"
+          size="large"
+          loading={isUsersLoading}
+          placeholder="select recipient"
+          onChange={changeRecipient}
+          style={{ width: '100%' }}
+          options={options}
+        />
+      </Form.Item>
 
-        <Form.Item name="recipient" rules={[{ required: true, message: 'Enter topic' }]}>
-          <Input type="text" size="large" placeholder="Enter topic" onChange={changeSubject} />
-        </Form.Item>
+      <Form.Item name="recipient" rules={[{ required: true, message: 'Enter topic' }]}>
+        <Input type="text" size="large" placeholder="Enter topic" onChange={changeSubject} />
+      </Form.Item>
 
-        <Form.Item name="text" rules={[{ required: true, message: 'Enter text' }]}>
-          <TextArea showCount maxLength={200} onChange={changeText} placeholder="message" />
-        </Form.Item>
+      <Form.Item name="text" rules={[{ required: true, message: 'Enter text' }]}>
+        <TextArea showCount maxLength={200} onChange={changeText} placeholder="message" />
+      </Form.Item>
 
-        <Button className="form__button" type="primary" htmlType="submit">
-          send message
-        </Button>
-      </Form>
-    </>
+      <Button loading={isLoading} className="form__button" type="primary" htmlType="submit">
+        send message
+      </Button>
+    </Form>
   );
 };
 

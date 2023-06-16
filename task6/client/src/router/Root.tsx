@@ -1,18 +1,20 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { Layout, notification } from 'antd';
+import { Layout, message, notification } from 'antd';
 import MenuSlider from '../features/SliderMenu/SliderMenu';
 import Footer from '../components/Footer/Footer';
 import Header from '../components/Header/Header';
-import openNotification from '../helpers/openNotification';
 import SocketIO from '../socketio/SocketIO';
-import { useAppSelector } from '../app/store/hooks';
+import { useAppDispatch, useAppSelector } from '../app/store/hooks';
 import { IMessageProps } from '../common/types/messagner';
-import { selectChat } from '../features/Chat/chatSlice';
+import { selectChat, setIsCreated } from '../features/Chat/chatSlice';
+import { openMessage, openNotification } from '../helpers/openNotification';
 
 const Root: FC = () => {
   const [collapsed, setCollapsed] = useState(true);
   const [api, notificationElement] = notification.useNotification();
+  const [messageApi, messagePopap] = message.useMessage();
+  const dispatch = useAppDispatch();
   const chat = useAppSelector(selectChat);
   const chatRef = useRef(chat);
 
@@ -23,6 +25,11 @@ const Root: FC = () => {
         openNotification(api, from, text, chatId as number);
       }
     });
+
+    SocketIO.value?.on('chatCreated', () => {
+      openMessage(messageApi, 'Chat was created');
+      dispatch(setIsCreated(true));
+    });
   }, [SocketIO.value]);
 
   useEffect(() => {
@@ -32,6 +39,7 @@ const Root: FC = () => {
   return (
     <Layout style={{ minHeight: '100vh' }}>
       {notificationElement}
+      {messagePopap}
       <MenuSlider collapsed={collapsed} setCollapsed={setCollapsed} />
       <Layout>
         <Header collapsed={collapsed} setCollapsed={setCollapsed} />

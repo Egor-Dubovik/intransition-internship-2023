@@ -3,8 +3,9 @@ import type { NotificationInstance } from 'antd/es/notification/interface';
 import { NavLink } from 'react-router-dom';
 import { NOTIFICATION } from '../common/constant/notification';
 import { ROUTES } from '../router/routes.enum';
+import { MessageInstance } from 'antd/es/message/interface';
 
-const openNotification = (
+export const openNotification = (
   api: NotificationInstance,
   sender: string,
   text: string,
@@ -18,4 +19,9 @@ const openNotification = (
   });
 };
 
-export default openNotification;
+export const openMessage = (messageApi: MessageInstance, content: string) => {
+  messageApi.open({
+    type: 'success',
+    content,
+  });
+};

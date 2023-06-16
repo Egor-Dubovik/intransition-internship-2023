@@ -5,6 +5,7 @@ import { IChat } from '../../common/types/messagner';
 const initialState = {
   active: {} as IChat,
   selected: [] as IChat[],
+  isCreated: false,
 };
 
 export const chatSlice = createSlice({
@@ -20,10 +21,14 @@ export const chatSlice = createSlice({
     removeSelectedChat: (state, action: PayloadAction<IChat>) => {
       state.selected = state.selected.filter((chat) => chat.id !== action.payload.id);
     },
+    setIsCreated: (state, action: PayloadAction<boolean>) => {
+      state.isCreated = action.payload;
+    },
   },
 });
 
-export const { setOpenChat, addSelectedChat, removeSelectedChat } = chatSlice.actions;
+export const { setOpenChat, addSelectedChat, removeSelectedChat, setIsCreated } = chatSlice.actions;
 export const selectChat = (state: RootState) => state.chat.active;
 export const selectedChat = (state: RootState) => state.chat.selected;
+export const selectIsCreated = (state: RootState) => state.chat.isCreated;
 export const chatReducer = chatSlice.reducer;
