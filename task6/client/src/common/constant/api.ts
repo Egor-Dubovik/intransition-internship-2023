@@ -4,6 +4,7 @@ export const API_URL = `${BASE_URL}/app`;
 
 export const API = {
   user: '/user',
+  users: '/user/all',
   usersById: '/user/allById',
   login: '/user/login',
   chats: '/messanger/chats',

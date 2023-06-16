@@ -4,7 +4,6 @@ import { Layout } from 'antd';
 import MenuSlider from '../features/SliderMenu/SliderMenu';
 import Footer from '../components/Footer/Footer';
 import Header from '../components/Header/Header';
-import './Root.css';
 
 const Root: FC = () => {
   const [collapsed, setCollapsed] = useState(true);
@@ -14,9 +13,7 @@ const Root: FC = () => {
       <MenuSlider collapsed={collapsed} setCollapsed={setCollapsed} />
       <Layout>
         <Header collapsed={collapsed} setCollapsed={setCollapsed} />
-        <Layout.Content className="root__content">
-          <Outlet />
-        </Layout.Content>
+        <Outlet />
         <Footer />
       </Layout>
     </Layout>

@@ -28,7 +28,6 @@ const App: FC = () => {
   useEffect(() => {
     SocketIO.value?.on('notification', (data: IMessageProps) => {
       const { from, text, chatId } = data;
-      console.log(chatRef.current?.id, chatId); // Используем chatRef.current вместо chat?.id
       if (!chatRef.current?.id || chatRef.current?.id !== chatId) {
         openNotification(api, from, text);
       }

@@ -22,7 +22,14 @@ export const userAPI = createApi({
         headers: { 'Content-Type': 'application/json' },
       }),
     }),
+
+    getAllUsers: builder.query<IUser[], void>({
+      query: () => ({
+        url: API.users,
+        headers: { 'Content-Type': 'application/json' },
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useGetUsersByIdQuery } = userAPI;
+export const { useLoginMutation, useGetUsersByIdQuery, useGetAllUsersQuery } = userAPI;
