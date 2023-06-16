@@ -1,25 +1,39 @@
-import React, { FC, useEffect } from 'react';
+import React, { ChangeEvent, Dispatch, FC, useEffect } from 'react';
 import { DeleteOutlined, SearchOutlined } from '@ant-design/icons';
 import { Input } from 'antd';
-import { useAppDispatch, useAppSelector } from '../../app/store/hooks';
-import { selectedChat, setIsDelete } from '../../features/Chat/chatSlice';
+import { useAppSelector } from '../../app/store/hooks';
+import { selectedChat } from '../../features/Chat/chatSlice';
+import { useDeleteMutation } from '../../features/ChatList/chatAPI';
+import { IChat } from '../../common/types/messagner';
 import './ToolBar.css';
-import { useDeleteMutation, useGetChatsQuery } from '../../features/ChatList/chatAPI';
 
-const ToolBar: FC = () => {
+interface IToolBarProps {
+  setTopic: Dispatch<React.SetStateAction<string>>;
+  setChats: React.Dispatch<React.SetStateAction<IChat[]>>;
+}
+
+const ToolBar: FC<IToolBarProps> = ({ setTopic, setChats }) => {
   const selectedChats = useAppSelector(selectedChat);
-  const [deleteChat, { isLoading, isSuccess }] = useDeleteMutation();
-  const dispatch = useAppDispatch();
+  const [deleteChat] = useDeleteMutation();
+  let debounceTimer: ReturnType<typeof setTimeout> | null = null;
 
   const handleDelete = (): void => {
     selectedChats.forEach((chat) => {
+      setChats((prevChats) => prevChats.filter((curentChat) => curentChat.id !== chat.id));
       deleteChat(chat.id);
     });
   };
 
-  useEffect(() => {
-    if (isSuccess) dispatch(setIsDelete(true));
-  }, [isSuccess]);
+  const handleSearch = (event: ChangeEvent<HTMLInputElement>): void => {
+    console.log('handleSearch');
+    if (debounceTimer) {
+      clearTimeout(debounceTimer);
+    }
+    debounceTimer = setTimeout(() => {
+      setTopic(event.target.value);
+      debounceTimer = null;
+    }, 300);
+  };
 
   return (
     <div className="messanger__tool-bar tool-bar">
@@ -27,6 +41,7 @@ const ToolBar: FC = () => {
         className="tool-bar__input"
         placeholder="search"
         prefix={<SearchOutlined rev="icon" />}
+        onChange={handleSearch}
       />
       <button className="tool-bar__button _delete" onClick={handleDelete}>
         <DeleteOutlined rev="icon" />

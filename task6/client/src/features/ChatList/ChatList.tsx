@@ -1,29 +1,31 @@
 import React, { FC, useEffect, useState, useRef } from 'react';
 import VirtualList from 'rc-virtual-list';
 import { IChat } from '../../common/types/messagner';
-import { useAppDispatch, useAppSelector } from '../../app/store/hooks';
+import { useAppSelector } from '../../app/store/hooks';
 import { selectUser } from '../LoginForm/userSlice';
 import { useGetChatsQuery } from './chatAPI';
 import Loader from '../../components/Loader/Loader';
 import ListItem from '../../components/ListItem/ListItem';
 import { List } from 'antd';
 import { CHAT } from '../../common/constant/chat';
-import { selectIsDeleted, setIsDelete } from '../Chat/chatSlice';
 import './ChatList.css';
 
-const ChatList: FC = () => {
-  const [chats, setChats] = useState<IChat[]>([]);
+interface IChatListProps {
+  topic: string;
+  chats: IChat[];
+  setChats: React.Dispatch<React.SetStateAction<IChat[]>>;
+}
+
+const ChatList: FC<IChatListProps> = ({ topic, chats, setChats }) => {
   const [offset, setOffset] = useState<number>(0);
   const user = useAppSelector(selectUser);
   const containerRef = useRef<HTMLDivElement>(null);
-  const isDeleted = useAppSelector(selectIsDeleted);
-  const dispatch = useAppDispatch();
   const { data, isLoading, refetch } = useGetChatsQuery(
     {
       id: user.data?.id as number,
       limit: CHAT.LIMIT,
       offset,
-      topic: '',
+      topic,
     },
     { refetchOnMountOrArgChange: true }
   );
@@ -31,25 +33,29 @@ const ChatList: FC = () => {
   const onScroll = (event: React.UIEvent<HTMLElement, UIEvent>): void => {
     const target = event.currentTarget;
     const scrolledToBottom = target.scrollHeight - target.scrollTop <= target.clientHeight + 1;
-    if (scrolledToBottom && data?.hasMoreChats) setOffset(offset + CHAT.LIMIT);
+    if (scrolledToBottom && data?.hasMoreChats) {
+      setOffset((prevOffset) => prevOffset + CHAT.LIMIT);
+      const newChats = data?.chats || [];
+      setChats((prevChats) => [...new Set([...prevChats, ...newChats])]);
+    }
   };
 
   useEffect(() => {
-    if (data) setChats([...chats, ...data.chats]);
-  }, [data]);
+    setOffset(0);
+    setChats([]);
+    refetch();
+  }, [topic]);
 
   useEffect(() => {
-    if (isDeleted) {
-      setChats([]);
-      refetch();
-      dispatch(setIsDelete(false));
+    if (data?.chats) {
+      setChats((prevChats) => [...new Set([...prevChats, ...data.chats])]);
     }
-  }, [isDeleted]);
+  }, [data]);
 
   return (
     <div ref={containerRef} className="chat-list">
       <>
-        {!isLoading || !isDeleted ? (
+        {!isLoading ? (
           <>
             <List>
               <VirtualList
