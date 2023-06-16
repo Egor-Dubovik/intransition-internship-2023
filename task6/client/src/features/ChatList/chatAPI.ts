@@ -7,8 +7,8 @@ export const chatAPI = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
   endpoints: (builder) => ({
     getChats: builder.query<IChatResInfo, IReqChatsProps>({
-      query: ({ id, limit, offset, topic }) => ({
-        url: `${API.chats}?id=${id}&limit=${limit}&offset=${offset}&topic=${topic}`,
+      query: ({ id, topic }) => ({
+        url: `${API.chats}?id=${id}&topic=${topic}`,
       }),
     }),
 

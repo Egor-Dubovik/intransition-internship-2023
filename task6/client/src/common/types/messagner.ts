@@ -16,8 +16,8 @@ export interface IMessage {
 }
 
 interface ILimitation {
-  limit: number;
-  offset: number;
+  limit?: number;
+  offset?: number;
   topic?: string;
 }
 
